@@ -10,7 +10,7 @@ foreach ($cmd in @('git', 'python', 'docker')) {
     }
 }
 
-docker info *> $null
+cmd /c “docker info >nul 2>&1"
 if ($LASTEXITCODE -ne 0) { throw 'Docker Desktop is not running. Start it and rerun this script.' }
 
 if (-not (Test-Path (Join-Path $backend '.venv\Scripts\python.exe'))) {
@@ -58,3 +58,4 @@ Set-Location $backend
 if ($LASTEXITCODE -ne 0) { throw 'Django check failed. Check backend/.env values.' }
 Write-Host 'Setup complete! Run scripts/start-windows.ps1 to start Django.' -ForegroundColor Green
 Write-Host 'Database migrations are intentionally NOT run by this script.'
+
