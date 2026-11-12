@@ -1,10 +1,10 @@
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import './styles/tokens.css';
 
 :root {
-  font-family: 'DM Sans', sans-serif;
-  color: #1e293b;
-  background: #f7f9fc;
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text);
+  background: var(--color-surface);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,12 +14,18 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-width: 320px;
 }
 
-button, input {
+button,
+input,
+textarea {
   font: inherit;
 }
 
@@ -28,6 +34,30 @@ a {
   text-decoration: none;
 }
 
-h1, h2, h3 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-heading);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

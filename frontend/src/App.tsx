@@ -1,61 +1,78 @@
-
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
-import { BookOpen, Code2, LayoutDashboard, TrendingUp } from 'lucide-react'
+import {
+  BookOpen,
+  Code2,
+  LayoutDashboard,
+  TrendingUp,
+} from 'lucide-react'
+
+import { LandingPage } from './features/landing/LandingPage'
+import {
+  Dashboard,
+  Lessons,
+  Practice,
+  Progress,
+  Login,
+  Register,
+  NotFound,
+} from './pages/Pages'
+
 import './App.css'
 
-const navigation = [
-  { path: '/', label: 'Dashboard', icon: LayoutDashboard },
+const studentNavigation = [
+  { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/lessons', label: 'Lessons', icon: BookOpen },
   { path: '/practice', label: 'Practice', icon: Code2 },
   { path: '/progress', label: 'My Progress', icon: TrendingUp },
 ]
 
-function Dashboard() {
+function StudentLayout({ children }: { children: React.ReactNode }) {
   return (
-    <section>
-      <h1>Welcome to PyLearn</h1>
-      <p>Learn Python, practice coding, and track your progress.</p>
-      <h2>Start your learning journey</h2>
-      <p>Choose Lessons or Practice from the navigation.</p>
-    </section>
-  )
-}
+    <div className="app-layout">
+      <aside className="sidebar">
+        <h2>PyLearn</h2>
+        <nav aria-label="Student navigation">
+          {studentNavigation.map(({ path, label, icon: Icon }) => (
+            <NavLink key={path} to={path}>
+              <Icon size={18} />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+      </aside>
 
-function Page({ title }: { title: string }) {
-  return (
-    <section>
-      <h1>{title}</h1>
-      <p>This section is under development.</p>
-    </section>
+      <main className="main-content">{children}</main>
+    </div>
   )
 }
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="app-layout">
-        <aside className="sidebar">
-          <h2>PyLearn</h2>
-          <nav aria-label="Main navigation">
-            {navigation.map(({ path, label, icon: Icon }) => (
-              <NavLink key={path} to={path} end={path === '/'}>
-                <Icon size={18} />
-                <span>{label}</span>
-              </NavLink>
-            ))}
-          </nav>
-        </aside>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/lessons" element={<Page title="Python Lessons" />} />
-            <Route path="/practice" element={<Page title="Coding Practice" />} />
-            <Route path="/progress" element={<Page title="My Progress" />} />
-            <Route path="*" element={<Page title="Page Not Found" />} />
-          </Routes>
-        </main>
-      </div>
+        <Route
+          path="/dashboard"
+          element={<StudentLayout><Dashboard /></StudentLayout>}
+        />
+        <Route
+          path="/lessons"
+          element={<StudentLayout><Lessons /></StudentLayout>}
+        />
+        <Route
+          path="/practice"
+          element={<StudentLayout><Practice /></StudentLayout>}
+        />
+        <Route
+          path="/progress"
+          element={<StudentLayout><Progress /></StudentLayout>}
+        />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   )
 }

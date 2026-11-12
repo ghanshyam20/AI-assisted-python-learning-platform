@@ -1,0 +1,26 @@
+:root {
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #1e40af;
+  --color-primary-soft: #eff6ff;
+
+  --color-heading: #0f172a;
+  --color-text: #334155;
+  --color-muted: #64748b;
+
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+
+  --color-success: #15803d;
+  --color-achievement: #b45309;
+  --color-error: #b91c1c;
+
+  --color-editor: #0f172a;
+  --color-editor-border: #334155;
+
+  --radius-control: 8px;
+  --radius-card: 12px;
+
+  --container-width: 1160px;
+  --section-spacing: 80px;
+}
