@@ -1243,3 +1243,39 @@
     transition: none;
   }
 }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  text-align: left;
+}
+
+.sidebar-logout:hover:not(:disabled) {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.sidebar-logout:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.sidebar-error {
+  margin: 0 0 10px;
+  color: var(--color-error);
+  font-size: 12px;
+  line-height: 1.5;
+}
