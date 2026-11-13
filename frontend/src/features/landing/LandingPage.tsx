@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
+  ArrowUpRight,
   BookOpen,
   CheckCircle2,
   Code2,
@@ -270,6 +271,28 @@ function Features() {
 }
 
 function Motivation() {
+  const progressRef = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const element = progressRef.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    observer.observe(element)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section className="landing-section">
       <Container className="motivation-grid">
@@ -286,7 +309,7 @@ function Motivation() {
           </p>
         </div>
 
-        <div className="progress-preview">
+        <div ref={progressRef} className={`progress-preview ${isVisible ? "progress-preview--visible" : ""}`}>
           <div className="progress-preview-header">
             <div>
               <h3>Learning progress</h3>
@@ -336,19 +359,44 @@ function Motivation() {
 function About() {
   return (
     <section id="about" className="landing-section section-muted">
-      <Container className="about-content">
-        <span className="eyebrow">ABOUT PYLEARN</span>
-        <h2>Built for people starting with Python.</h2>
-        <p>
-          PyLearn is a student-developed learning platform designed
-          to help beginners understand programming through regular
-          coding practice.
-        </p>
-        <p>
-          The project brings lessons, practical exercises,
-          and learning feedback into one place, so students
-          can focus on improving their skills step by step.
-        </p>
+      <Container className="about-grid">
+        <div className="about-content">
+          <span className="eyebrow">WHY PYLEARN EXISTS</span>
+          <h2>Learning Python should feel like progress, not guesswork.</h2>
+          <p>
+            Reading tutorials is a good start. But understanding programming
+            comes from writing code, making mistakes, and trying again.
+          </p>
+          <p>
+            PyLearn is a student-developed project bringing beginner lessons,
+            coding exercises, automated feedback, and AI-assisted guidance
+            into one learning experience.
+          </p>
+          <div className="about-values">
+            <div><CheckCircle2 size={18} /><span>Start with the fundamentals</span></div>
+            <div><CheckCircle2 size={18} /><span>Learn through real practice</span></div>
+            <div><CheckCircle2 size={18} /><span>See your progress over time</span></div>
+          </div>
+        </div>
+
+        <div className="about-journey" aria-label="PyLearn learning approach">
+          <div className="about-journey-heading">
+            <span className="about-journey-icon"><Code2 size={20} /></span>
+            <div>
+              <strong>Your learning journey</strong>
+              <span>One step at a time</span>
+            </div>
+          </div>
+          <div className="about-journey-steps">
+            <div><span>01</span><div><strong>Understand</strong><p>Learn a Python concept with clear examples.</p></div></div>
+            <div><span>02</span><div><strong>Practice</strong><p>Apply what you learned in the code editor.</p></div></div>
+            <div><span>03</span><div><strong>Improve</strong><p>Use feedback and hints to keep moving forward.</p></div></div>
+          </div>
+          <div className="about-journey-note">
+            <Lightbulb size={17} />
+            <span>Built around learning by doing.</span>
+          </div>
+        </div>
       </Container>
     </section>
   )
@@ -357,14 +405,19 @@ function About() {
 function FinalCTA() {
   return (
     <section className="landing-section final-cta">
-      <Container className="final-cta-inner">
-        <h2>Ready to start coding?</h2>
-        <p>
-          Create an account and begin with your first Python lesson.
-        </p>
-        <Button to="/register">
-          Create an account <ArrowRight size={18} />
-        </Button>
+      <Container>
+        <div className="final-cta-panel">
+          <span className="final-cta-eyebrow">YOUR PYTHON JOURNEY</span>
+          <h2>Your next line of code starts here.</h2>
+          <p>
+            Build your skills with focused lessons, practical challenges,
+            and guidance when you need it.
+          </p>
+          <Button to="/register" className="final-cta-button">
+            Get started <ArrowRight size={18} />
+          </Button>
+          <span className="final-cta-note">Start with the basics. Grow at your own pace.</span>
+        </div>
       </Container>
     </section>
   )
@@ -373,22 +426,90 @@ function FinalCTA() {
 function PublicFooter() {
   return (
     <footer className="public-footer">
-      <Container className="footer-inner">
-        <div>
-          <Link className="footer-brand" to="/">
-            <Code2 size={19} />
-            PyLearn
-          </Link>
-          <p>Learn Python through practice.</p>
+      <Container>
+        <div className="footer-main">
+          <div className="footer-intro">
+            <Link className="footer-brand" to="/">
+              <Code2 size={21} />
+              <span>PyLearn</span>
+            </Link>
+            <p>
+              A student-developed platform helping beginners
+              learn Python through practice.
+            </p>
+            <div className="footer-socials">
+              <a
+                className="footer-social-link"
+                href="https://github.com/ghanshyam20"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Developer GitHub profile (opens in a new tab)"
+              >
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.12c-3.09.67-3.74-1.31-3.74-1.31-.5-1.28-1.23-1.62-1.23-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.76 2.26 3.21 1.6.1-.72.39-1.21.71-1.49-2.47-.28-5.06-1.24-5.06-5.49 0-1.21.43-2.2 1.14-2.98-.11-.28-.5-1.41.11-2.94 0 0 .93-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.53.22 2.66.11 2.94.71.78 1.14 1.77 1.14 2.98 0 4.26-2.6 5.2-5.08 5.48.4.35.76 1.03.76 2.08v3.08c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
+                </svg>
+                <span>GitHub</span>
+                <ArrowUpRight size={14} />
+              </a>
+
+              <a
+                className="footer-social-link"
+                href="https://www.linkedin.com/in/ghanshyam2026/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Developer LinkedIn profile (opens in a new tab)"
+              >
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.93 18.75H4.98V9.2h2.95v9.55ZM6.45 7.9a1.71 1.71 0 1 1 0-3.42 1.71 1.71 0 0 1 0 3.42Zm12.3 10.85H15.8V14.1c0-1.11-.02-2.54-1.55-2.54-1.55 0-1.79 1.21-1.79 2.46v4.73H9.51V9.2h2.83v1.3h.04c.39-.74 1.36-1.53 2.8-1.53 2.99 0 3.57 1.97 3.57 4.53v5.25Z" />
+                </svg>
+                <span>LinkedIn</span>
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </div>
+
+          <nav className="footer-column" aria-label="Footer navigation">
+            <h3>Explore</h3>
+            <a href="#how-it-works">How it works</a>
+            <a href="#features">Features</a>
+            <a href="#about">About PyLearn</a>
+          </nav>
+
+          <div className="footer-column">
+            <h3>Get started</h3>
+            <Link to="/register">Create an account</Link>
+            <Link to="/login">Sign in</Link>
+          </div>
+
+          <div className="footer-column">
+            <h3>Project</h3>
+            <a
+              href="https://github.com/ghanshyam20/AI-assisted-python-learning-platform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source code <ArrowUpRight size={13} />
+            </a>
+            <a href="#about">Our approach</a>
+          </div>
         </div>
 
-        <div className="footer-links">
-          <a href="#about">About</a>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} PyLearn. Student-developed project.</span>
+          <span>Learn. Practice. Improve.</span>
         </div>
-
-        <span className="footer-copy">
-          © {new Date().getFullYear()} PyLearn
-        </span>
       </Container>
     </footer>
   )

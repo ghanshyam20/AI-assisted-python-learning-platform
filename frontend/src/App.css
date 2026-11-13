@@ -423,55 +423,317 @@
   background: var(--color-primary);
 }
 
-.about-content {
-  max-width: 760px;
-}
-
-.final-cta {
-  text-align: center;
-}
-
-.final-cta-inner {
-  display: flex;
-  flex-direction: column;
+/* About */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
+  gap: clamp(40px, 6vw, 90px);
 }
 
-.final-cta p {
-  margin-bottom: 26px;
+.about-content h2 {
+  max-width: 580px;
 }
 
-.public-footer {
-  padding: 40px 0;
-  border-top: 1px solid var(--color-border);
+.about-content p {
+  max-width: 560px;
 }
 
-.footer-inner {
+.about-values {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.about-values > div {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 30px;
+  gap: 12px;
+  color: var(--color-heading);
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.footer-brand {
-  font-size: 17px;
-}
-
-.footer-brand svg {
+.about-values svg {
+  flex-shrink: 0;
   color: var(--color-primary);
 }
 
-.footer-inner p,
-.footer-copy {
-  margin: 10px 0 0;
+.about-journey {
+  padding: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.about-journey-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.about-journey-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.about-journey-heading > div {
+  display: grid;
+  gap: 5px;
+}
+
+.about-journey-heading strong {
+  font-size: 16px;
+}
+
+.about-journey-heading div span {
   color: var(--color-muted);
   font-size: 12px;
 }
 
-.footer-links {
-  display: flex;
+.about-journey-steps {
+  display: grid;
   gap: 24px;
+  padding: 28px 0;
+}
+
+.about-journey-steps > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.about-journey-steps > div > span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.about-journey-steps strong {
+  font-size: 14px;
+}
+
+.about-journey-steps p {
+  margin: 5px 0 0;
+  color: var(--color-muted);
   font-size: 13px;
+  line-height: 1.6;
+}
+
+.about-journey-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f0f5ff;
+  color: #2445a0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Final CTA */
+.final-cta {
+  padding-top: 30px;
+}
+
+.final-cta-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(48px, 7vw, 88px) 24px;
+  overflow: hidden;
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 85% 10%, rgba(68, 116, 255, 0.32), transparent 45%),
+    linear-gradient(135deg, #101d38, #172b54);
+  color: #fff;
+  text-align: center;
+}
+
+.final-cta-eyebrow {
+  color: #9dbaff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.final-cta-panel h2 {
+  max-width: 660px;
+  margin: 18px 0;
+  color: #fff;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.2;
+}
+
+.final-cta-panel p {
+  max-width: 540px;
+  margin: 0 0 28px;
+  color: #cbd5e1;
+  line-height: 1.75;
+}
+
+.final-cta-note {
+  margin-top: 18px;
+  color: #a9b9d3;
+  font-size: 12px;
+}
+
+/* Primary action on dark CTA */
+.final-cta-panel .final-cta-button {
+  background: #ffffff;
+  color: #14244a;
+  border: 1px solid #ffffff;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.final-cta-panel .final-cta-button:hover {
+  background: #eaf0ff;
+  border-color: #eaf0ff;
+  color: #14244a;
+}
+
+.final-cta-panel .final-cta-button:focus-visible {
+  outline: 3px solid #93b4ff;
+  outline-offset: 4px;
+}
+
+/* Footer */
+.public-footer {
+  padding: 64px 0 24px;
+  background: #101827;
+  color: #e2e8f0;
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 48px;
+  padding-bottom: 60px;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-brand svg {
+  color: #7d9cff;
+}
+
+.footer-intro p {
+  max-width: 280px;
+  margin: 18px 0;
+  color: #a6b4c8;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 22px;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #d5e0f2;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.footer-social-link:hover,
+.footer-column a:hover {
+  color: #93b4ff;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer-column h3 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.footer-column a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #a6b4c8;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #334155;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-main {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-journey {
+    padding: 22px;
+  }
+
+  .final-cta-panel {
+    border-radius: 16px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 20px;
+  }
+
+  .footer-intro {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 900px) {
@@ -963,5 +1225,21 @@
 @media (max-width: 600px) {
   .steps-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Progress preview — reveal on scroll */
+.progress-fill {
+  width: 0;
+  transition: width 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.progress-preview--visible .progress-fill {
+  width: 60%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-fill {
+    transition: none;
   }
 }
