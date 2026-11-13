@@ -20,45 +20,50 @@ import { Container } from '../../components/ui/Container'
 const features = [
   {
     icon: BookOpen,
-    title: 'Python lessons',
+    title: 'Structured Python lessons',
     description:
-      'Understand Python concepts through short, structured lessons.',
+      'Build a foundation with short explanations, practical examples, and beginner-friendly topics.',
   },
   {
     icon: Code2,
-    title: 'Coding exercises',
+    title: 'Practice in your browser',
     description:
-      'Put what you learn into practice by solving programming challenges.',
+      'Write Python solutions in a dedicated editor and check your code against automated tests.',
   },
   {
     icon: Lightbulb,
-    title: 'Helpful AI hints',
+    title: 'AI guidance when you need it',
     description:
-      'Get guidance when you are stuck without immediately seeing the solution.',
+      'Get contextual hints that help you understand mistakes without immediately revealing the answer.',
   },
   {
     icon: TrendingUp,
-    title: 'Progress tracking',
+    title: 'Track your learning progress',
     description:
-      'Review completed exercises and see how your Python skills develop.',
+      'Follow completed exercises, daily practice goals, XP, and learning streaks as you improve.',
   },
 ]
 
 const steps = [
   {
     number: '01',
-    title: 'Learn a concept',
-    description: 'Start with a short lesson that explains one Python topic.',
+    title: 'Learn the concept',
+    description: 'Start with a focused Python lesson and a clear example.',
   },
   {
     number: '02',
-    title: 'Write some code',
-    description: 'Apply what you learned in a coding exercise.',
+    title: 'Solve a challenge',
+    description: 'Write Python code directly in the practice workspace.',
   },
   {
     number: '03',
-    title: 'Review your result',
-    description: 'Check your answer, understand mistakes, and try again.',
+    title: 'Check your solution',
+    description: 'Run your code and review the results of automated tests.',
+  },
+  {
+    number: '04',
+    title: 'Improve with guidance',
+    description: 'Use AI hints when needed, fix mistakes, and try again.',
   },
 ]
 
@@ -121,31 +126,54 @@ function PublicHeader() {
 
 function CodePreview() {
   return (
-    <div className="code-preview" aria-label="Example Python exercise">
-      <div className="code-preview-header">
-        <span className="code-file">
-          <Code2 size={15} />
-          exercise.py
-        </span>
-        <span className="code-language">Python basics</span>
+    <div className="workspace-preview" aria-label="Illustrative Python coding workspace">
+      <div className="workspace-topbar">
+        <div className="workspace-file">
+          <Code2 size={16} />
+          <span>practice / greeting.py</span>
+        </div>
+        <span className="workspace-demo-label">DEMO PREVIEW</span>
       </div>
 
-      <div className="code-challenge">
-        <span className="challenge-label">EXAMPLE EXERCISE</span>
-        <p>Write a function that greets someone by name.</p>
+      <div className="workspace-task">
+        <div className="workspace-task-heading">
+          <span className="workspace-task-category">PYTHON BASICS</span>
+          <span className="workspace-difficulty">Beginner</span>
+        </div>
+        <h3>Write your first function</h3>
+        <p>Create a function that returns a greeting using the given name.</p>
       </div>
 
-      <pre className="code-content"><code>{`def greet(name):
+      <div className="workspace-editor">
+        <div className="workspace-editor-label">
+          <span><Code2 size={14} /> greeting.py</span>
+          <span>Python 3</span>
+        </div>
+        <div className="workspace-code">
+          <span className="workspace-line-numbers" aria-hidden="true">1<br />2<br />3<br />4<br />5</span>
+          <pre><code>{`def greet(name):
     return f"Hello, {name}"
 
 print(greet("Alex"))`}</code></pre>
-
-      <div className="code-result">
-        <div className="result-heading">
-          <CheckCircle2 size={17} />
-          <span>Example test passed</span>
         </div>
-        <code>Hello, Alex</code>
+      </div>
+
+      <div className="workspace-actions" aria-label="Illustrative editor controls">
+        <span className="workspace-run">Run code</span>
+        <span className="workspace-submit">Submit solution</span>
+      </div>
+
+      <div className="workspace-feedback">
+        <div className="workspace-feedback-heading">
+          <CheckCircle2 size={16} />
+          <strong>Sample result · 2 tests passed</strong>
+        </div>
+        <code>Output: Hello, Alex</code>
+      </div>
+
+      <div className="workspace-hint">
+        <Lightbulb size={16} />
+        <span>AI hints help you move forward without revealing the full answer.</span>
       </div>
     </div>
   )
@@ -157,10 +185,11 @@ function Hero() {
       <Container className="hero-grid">
         <div className="hero-content">
           <span className="eyebrow">PYTHON LEARNING PLATFORM</span>
-          <h1>Learn Python by writing code.</h1>
+          <h1>Learn Python. Practice with purpose.</h1>
           <p>
-            Build your skills with short lessons, coding exercises,
-            and feedback that helps you improve.
+            Go beyond watching tutorials. Learn Python concepts,
+            solve coding challenges, and improve with test feedback
+            and AI-powered hints when you need them.
           </p>
 
           <div className="hero-actions">
