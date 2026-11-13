@@ -8,12 +8,12 @@ import {
 
 import { LandingPage } from './features/landing/LandingPage'
 import { RegisterPage } from './features/auth/RegisterPage'
+import { LoginPage } from './features/auth/LoginPage'
 import {
   Dashboard,
   Lessons,
   Practice,
   Progress,
-  Login,
   NotFound,
 } from './pages/Pages'
 
@@ -51,7 +51,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
         <Route

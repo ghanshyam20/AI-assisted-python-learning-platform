@@ -268,3 +268,14 @@
 .auth-strength-bars[data-strength="4"] span:nth-child(-n+4) {
   background: var(--color-success);
 }
+
+.auth-success {
+  margin: 0 0 24px;
+  padding: 12px 14px;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--radius-control);
+  background: #f0fdf4;
+  color: var(--color-success);
+  font-size: 13px;
+  line-height: 1.5;
+}
