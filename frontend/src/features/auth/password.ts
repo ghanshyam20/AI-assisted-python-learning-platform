@@ -31,3 +31,22 @@ export function getPasswordChecks(
     },
   ]
 }
+
+export function getPasswordStrength(password: string) {
+  if (!password) return { score: 0, label: '' }
+
+  let score = 0
+
+  if (password.length >= 8) score++
+  if (password.length >= 12) score++
+  if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++
+  if (/\d/.test(password) || /[^a-zA-Z0-9]/.test(password)) score++
+
+  const level = Math.max(1, score)
+  const labels = ['Weak', 'Fair', 'Good', 'Strong']
+
+  return {
+    score: level,
+    label: labels[level - 1],
+  }
+}

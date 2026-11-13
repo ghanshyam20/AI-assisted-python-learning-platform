@@ -4,7 +4,7 @@ import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ApiError, authApi } from '../../lib/api'
 import type { RegisterData } from '../../lib/api'
-import { getPasswordChecks } from './password'
+import { getPasswordChecks, getPasswordStrength } from './password'
 import './auth.css'
 
 const initialForm: RegisterData = {
@@ -151,6 +151,29 @@ export function RegisterPage() {
               </button>
             </span>
           </label>
+
+          {form.password.length > 0 && (
+            <div className="auth-strength">
+              <div className="auth-strength-heading">
+                <span>Password strength</span>
+                <strong>{getPasswordStrength(form.password).label}</strong>
+              </div>
+              <div
+                className="auth-strength-bars"
+                data-strength={getPasswordStrength(form.password).score}
+                role="meter"
+                aria-label="Estimated password strength"
+                aria-valuemin={0}
+                aria-valuemax={4}
+                aria-valuenow={getPasswordStrength(form.password).score}
+                aria-valuetext={getPasswordStrength(form.password).label}
+              >
+                {[1, 2, 3, 4].map((level) => (
+                  <span key={level} />
+                ))}
+              </div>
+            </div>
+          )}
 
           {form.password.length > 0 && (
             <div className="auth-password-checks" aria-live="polite">
