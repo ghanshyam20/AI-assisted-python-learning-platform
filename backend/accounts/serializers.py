@@ -53,3 +53,36 @@ class RegisterSerializer(serializers.ModelSerializer):
         validated_data.pop("confirm_password")
 
         return User.objects.create_user(**validated_data)
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        write_only=True,
+        trim_whitespace=False,
+    )
+
+    def validate(self, attrs):
+        from django.contrib.auth import authenticate
+
+        email = attrs["email"].strip().lower()
+        password = attrs["password"]
+
+        user = authenticate(
+            request=self.context.get("request"),
+            email=email,
+            password=password,
+        )
+
+        if user is None:
+            raise serializers.ValidationError(
+                {"detail": "Invalid email or password."}
+            )
+
+        if not user.is_active:
+            raise serializers.ValidationError(
+                {"detail": "Invalid email or password."}
+            )
+
+        attrs["user"] = user
+        return attrs
