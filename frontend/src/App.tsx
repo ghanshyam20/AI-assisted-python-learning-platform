@@ -7,13 +7,13 @@ import {
 } from 'lucide-react'
 
 import { LandingPage } from './features/landing/LandingPage'
+import { RegisterPage } from './features/auth/RegisterPage'
 import {
   Dashboard,
   Lessons,
   Practice,
   Progress,
   Login,
-  Register,
   NotFound,
 } from './pages/Pages'
 
@@ -52,7 +52,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<RegisterPage />} />
 
         <Route
           path="/dashboard"
