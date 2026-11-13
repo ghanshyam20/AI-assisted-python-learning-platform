@@ -4,6 +4,7 @@ import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ApiError, authApi } from '../../lib/api'
 import type { RegisterData } from '../../lib/api'
+import { getPasswordChecks } from './password'
 import './auth.css'
 
 const initialForm: RegisterData = {
@@ -150,6 +151,28 @@ export function RegisterPage() {
               </button>
             </span>
           </label>
+
+          {form.password.length > 0 && (
+            <div className="auth-password-checks" aria-live="polite">
+              <p>Password guidance</p>
+              <ul>
+                {getPasswordChecks(form.password, form.confirm_password).map(
+                  (check) => (
+                    <li
+                      key={check.label}
+                      className={check.passed ? 'is-valid' : 'is-pending'}
+                    >
+                      <span aria-hidden="true">
+                        {check.passed ? '✓' : '○'}
+                      </span>
+                      {check.label}
+                      {!check.required && <small>Recommended</small>}
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
+          )}
 
           {error && (
             <p className="auth-error" role="alert">{error}</p>
