@@ -9,6 +9,7 @@ import {
 import { LandingPage } from './features/landing/LandingPage'
 import { RegisterPage } from './features/auth/RegisterPage'
 import { LoginPage } from './features/auth/LoginPage'
+import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import {
   Dashboard,
   Lessons,
@@ -28,7 +29,8 @@ const studentNavigation = [
 
 function StudentLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="app-layout">
+    <ProtectedRoute>
+      <div className="app-layout">
       <aside className="sidebar">
         <h2>PyLearn</h2>
         <nav aria-label="Student navigation">
@@ -42,7 +44,8 @@ function StudentLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       <main className="main-content">{children}</main>
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }
 
