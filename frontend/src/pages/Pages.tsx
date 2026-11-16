@@ -1,3 +1,4 @@
+import { PythonTipCard } from '../features/dashboard/PythonTipCard'
 import { useEffect, useState } from 'react'
 import { authApi } from '../lib/api'
 import { StudentGreeting } from '../features/dashboard/StudentGreeting'
@@ -82,6 +83,7 @@ export function Dashboard() {
           <span className="card-link">View progress →</span>
         </Link>
       </div>
+      <PythonTipCard />
     </section>
   )
 }
