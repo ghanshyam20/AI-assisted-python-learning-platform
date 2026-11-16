@@ -1279,3 +1279,34 @@
   font-size: 12px;
   line-height: 1.5;
 }
+
+/* Student dashboard widgets */
+.student-greeting,
+.daily-goal-card {
+  padding: 24px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.student-greeting > p:first-child {
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.student-greeting h2,
+.daily-goal-card h2 {
+  margin: 10px 0;
+  color: #0f172a;
+}
+
+.daily-goal-card progress {
+  display: block;
+  width: 100%;
+  height: 12px;
+  margin: 16px 0;
+  accent-color: #2563eb;
+}
