@@ -1,0 +1,40 @@
+﻿.python-tip-card {
+  padding: 24px;
+  margin-top: 20px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+}
+
+.python-tip-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #2563EB;
+}
+
+.python-tip-heading h2 {
+  margin: 0;
+  color: #0F172A;
+  font-size: 18px;
+}
+
+.python-tip-card > p {
+  margin: 14px 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.python-tip-card pre {
+  overflow-x: auto;
+  padding: 16px;
+  border-radius: 8px;
+  background: #0F172A;
+  color: #E2E8F0;
+  font-size: 14px;
+}
+
+.python-tip-card .python-tip-note {
+  margin-bottom: 0;
+  font-size: 13px;
+}
