@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react'
+import { authApi } from '../lib/api'
+import { StudentGreeting } from '../features/dashboard/StudentGreeting'
+import { DailyGoalCard } from '../features/dashboard/DailyGoalCard'
 
 import { Link } from 'react-router-dom'
 
@@ -21,8 +25,24 @@ function Page({ title, description }: PageProps) {
 }
 
 export function Dashboard() {
+  const [firstName, setFirstName] = useState('')
+
+  useEffect(() => {
+    let active = true
+
+    authApi.me()
+      .then((student) => {
+        if (active) setFirstName(student.first_name)
+      })
+      .catch(() => {})
+
+    return () => { active = false }
+  }, [])
+
   return (
     <section className="page">
+      {firstName && <StudentGreeting firstName={firstName} />}
+      <DailyGoalCard completed={0} target={5} />
       <div className="welcome">
         <span className="eyebrow">YOUR LEARNING SPACE</span>
         <h1>Learn Python, one step at a time.</h1>
