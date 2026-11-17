@@ -85,18 +85,6 @@
   color: white;
 }
 
-.dashboard-course::after {
-  position: absolute;
-  top: 80px;
-  right: -90px;
-  width: 260px;
-  height: 260px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 50%;
-  content: '';
-  pointer-events: none;
-}
-
 .dashboard-course-top,
 .dashboard-course-meta {
   display: flex;
