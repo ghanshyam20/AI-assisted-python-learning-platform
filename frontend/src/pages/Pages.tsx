@@ -1,3 +1,4 @@
+import '../features/dashboard/dashboard.css'
 import { PythonTipCard } from '../features/dashboard/PythonTipCard'
 import { useEffect, useState } from 'react'
 import { authApi } from '../lib/api'
@@ -41,49 +42,83 @@ export function Dashboard() {
   }, [])
 
   return (
-    <section className="page">
+    <section className="page student-dashboard">
+      <div className="dashboard-heading">
+        <div>
+          <span className="dashboard-kicker">PYLEARN / STUDENT DASHBOARD</span>
+          <h1>Your Python workspace</h1>
+          <p>Learn the concepts, write real code, and build your skills step by step.</p>
+        </div>
+        <span className="dashboard-heading-icon" aria-hidden="true">{'</>'}</span>
+      </div>
+
       {firstName && <StudentGreeting firstName={firstName} />}
-      <DailyGoalCard completed={0} target={5} />
-      <div className="welcome">
-        <span className="eyebrow">YOUR LEARNING SPACE</span>
-        <h1>Learn Python, one step at a time.</h1>
-        <p>
-          Practice coding, build your skills, and follow your progress
-          as you learn.
-        </p>
-        <Link className="primary-button" to="/practice">
-          Start practicing
-        </Link>
+
+      <div className="dashboard-columns">
+        <div className="dashboard-primary">
+          <section className="dashboard-course">
+            <div className="dashboard-course-top">
+              <span className="dashboard-course-label">YOUR LEARNING PATH</span>
+              <span className="dashboard-course-level">BEGINNER</span>
+            </div>
+
+            <div className="dashboard-course-symbol" aria-hidden="true">Py</div>
+            <h2>Python Fundamentals</h2>
+            <p>
+              Build a strong foundation in Python, from your first line of code
+              to functions, collections, and problem-solving.
+            </p>
+
+            <div className="dashboard-course-meta">
+              <span>8 planned chapters</span>
+              <span>Step-by-step lessons</span>
+            </div>
+
+            <Link className="dashboard-course-action" to="/lessons">
+              Explore learning path <span aria-hidden="true">→</span>
+            </Link>
+          </section>
+
+          <div className="dashboard-section-title">
+            <div>
+              <h2>What would you like to do?</h2>
+              <p>Choose how you want to learn today.</p>
+            </div>
+          </div>
+
+          <div className="dashboard-action-grid">
+            <Link className="dashboard-action-card" to="/lessons">
+              <span className="dashboard-action-icon dashboard-action-icon--blue" aria-hidden="true">01</span>
+              <h3>Learn Python</h3>
+              <p>Follow a structured path from beginner concepts to practical skills.</p>
+              <span className="dashboard-action-link">Browse lessons →</span>
+            </Link>
+
+            <Link className="dashboard-action-card" to="/practice">
+              <span className="dashboard-action-icon dashboard-action-icon--green" aria-hidden="true">02</span>
+              <h3>Coding practice</h3>
+              <p>Work through Python challenges and improve your problem-solving.</p>
+              <span className="dashboard-action-link">Open practice →</span>
+            </Link>
+          </div>
+
+          <Link className="dashboard-progress-link" to="/progress">
+            <div>
+              <strong>My learning progress</strong>
+              <p>Track your completed lessons and coding activity when tracking is available.</p>
+            </div>
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+
+        <aside className="dashboard-secondary" aria-label="Learning tools">
+          <DailyGoalCard completed={0} target={5} />
+          <p className="dashboard-goal-note">
+            Goal tracking preview — exercise activity is not connected yet.
+          </p>
+          <PythonTipCard />
+        </aside>
       </div>
-
-      <div className="section-heading">
-        <h2>Explore your learning space</h2>
-        <p>Choose where you want to begin.</p>
-      </div>
-
-      <div className="feature-grid">
-        <Link className="feature-card" to="/lessons">
-          <span className="feature-number">01</span>
-          <h3>Python lessons</h3>
-          <p>Build a strong foundation with beginner-friendly lessons.</p>
-          <span className="card-link">Explore lessons →</span>
-        </Link>
-
-        <Link className="feature-card" to="/practice">
-          <span className="feature-number">02</span>
-          <h3>Coding practice</h3>
-          <p>Write Python code and work through programming exercises.</p>
-          <span className="card-link">Explore practice →</span>
-        </Link>
-
-        <Link className="feature-card" to="/progress">
-          <span className="feature-number">03</span>
-          <h3>My progress</h3>
-          <p>Review your learning activity and completed exercises.</p>
-          <span className="card-link">View progress →</span>
-        </Link>
-      </div>
-      <PythonTipCard />
     </section>
   )
 }
