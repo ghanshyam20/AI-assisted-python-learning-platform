@@ -1,6 +1,6 @@
-﻿import { useState } from ‘react’
-import { BookOpen, ChevronDown, ChevronRight, Clock3, Code2 } from ‘lucide-react’
-import ‘./LessonsCatalog.css’
+﻿import { useState } from 'react'
+import { ChevronDown, ChevronRight, Clock3 } from 'lucide-react'
+import './LessonsCatalog.css'
 
 type Chapter = {
 title: string
@@ -10,63 +10,61 @@ lessons: string[]
 
 const chapters: Chapter[] = [
 {
-title: ‘Getting Started with Python’,
-description: ‘Understand Python and write your first program.’,
-lessons: [‘Introduction to Python’, ‘Your First Python Program’, ‘Comments and Basic Syntax’],
+title: 'Getting Started with Python',
+description: 'Understand Python and write your first program.',
+lessons: ['Introduction to Python', 'Your First Python Program', 'Comments and Basic Syntax'],
 },
 {
-title: ‘Variables and Data Types’,
-description: ‘Learn how Python stores and works with information.’,
-lessons: [‘Variables’, ‘Numbers’, ‘Strings’, ‘Booleans’],
+title: 'Variables and Data Types',
+description: 'Learn how Python stores and works with information.',
+lessons: ['Variables', 'Numbers', 'Strings', 'Booleans'],
 },
 {
-title: ‘Operators and User Input’,
-description: ‘Work with calculations, comparisons and input.’,
-lessons: [‘Python Operators’, ‘Comparisons’, ‘Getting User Input’],
+title: 'Operators and User Input',
+description: 'Work with calculations, comparisons and input.',
+lessons: ['Python Operators', 'Comparisons', 'Getting User Input'],
 },
 {
-title: ‘Conditions’,
-description: ‘Make decisions using conditional statements.’,
-lessons: [‘If Statements’, ‘Else and Elif’, ‘Logical Conditions’, ‘Nested Conditions’],
+title: 'Conditions',
+description: 'Make decisions using conditional statements.',
+lessons: ['If Statements', 'Else and Elif', 'Logical Conditions', 'Nested Conditions'],
 },
 {
-title: ‘Loops’,
-description: ‘Repeat tasks without writing the same code again.’,
-lessons: [‘For Loops’, ‘While Loops’, ‘Range’, ‘Break and Continue’],
+title: 'Loops',
+description: 'Repeat tasks without writing the same code again.',
+lessons: ['For Loops', 'While Loops', 'Range', 'Break and Continue'],
 },
 {
-title: ‘Data Structures’,
-description: ‘Organize collections of information.’,
-lessons: [‘Lists’, ‘Tuples’, ‘Dictionaries’, ‘Sets’, ‘Working with Collections’],
+title: 'Data Structures',
+description: 'Organize collections of information.',
+lessons: ['Lists', 'Tuples', 'Dictionaries', 'Sets', 'Working with Collections'],
 },
 {
-title: ‘Functions’,
-description: ‘Write reusable and organized Python code.’,
-lessons: [‘Defining Functions’, ‘Parameters’, ‘Return Values’, ‘Variable Scope’],
+title: 'Functions',
+description: 'Write reusable and organized Python code.',
+lessons: ['Defining Functions', 'Parameters', 'Return Values', 'Variable Scope'],
 },
 {
-title: ‘Errors and Files’,
-description: ‘Handle common errors and work with files.’,
-lessons: [‘Understanding Errors’, ‘Try and Except’, ‘Reading and Writing Files’],
+title: 'Errors and Files',
+description: 'Handle common errors and work with files.',
+lessons: ['Understanding Errors', 'Try and Except', 'Reading and Writing Files'],
 },
 ]
 
 export function LessonsCatalog() {
 const [selectedChapter, setSelectedChapter] = useState<number | null>(0)
-const lessonCount = chapters.reduce((total, chapter) => total + chapter.lessons.length, 0)
 
 return (
-<section className=“lessons-catalog”>
-<header className=“lessons-header”>
-<span className=“lessons-eyebrow”>PYLEARN / LEARNING PATH</span>
+<section className="lessons-catalog">
+<header className="lessons-header">
+<span className="lessons-eyebrow">PYLEARN / LEARNING PATH</span>
 <h1>Python Fundamentals</h1>
 <p>
 Learn Python from the beginning. Explore chapters, understand the topics,
 and get ready for coding practice.
 </p>
-<div className=“lessons-summary”>
-<span><BookOpen size={16} /> {chapters.length} chapters</span>
-<span><Code2 size={16} /> {lessonCount} lessons planned</span>
+<div className="lessons-summary">
+
 <span><Clock3 size={16} /> Beginner level</span>
 </div>
 </header>
