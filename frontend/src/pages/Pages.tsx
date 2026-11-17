@@ -1,3 +1,4 @@
+import { LessonsCatalog } from '../features/lessons/LessonsCatalog'
 import '../features/dashboard/dashboard.css'
 import { PythonTipCard } from '../features/dashboard/PythonTipCard'
 import { useEffect, useState } from 'react'
@@ -124,12 +125,7 @@ export function Dashboard() {
 }
 
 export function Lessons() {
-  return (
-    <Page
-      title="Python Lessons"
-      description="Learn Python concepts through structured lessons."
-    />
-  )
+  return <LessonsCatalog />
 }
 
 export function Practice() {
