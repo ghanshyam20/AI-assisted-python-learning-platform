@@ -1,5 +1,5 @@
-import { ArrowLeft, ArrowRight } from ‘lucide-react‘
-import ‘./LessonNavigation.css‘
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import './LessonNavigation.css'
 
 type LessonNavigationProps = {
 chapterTitle: string
@@ -23,13 +23,13 @@ const progress = totalLessons > 0
 : 0
 
 return (
-<nav className=“lesson-navigation“ aria-label=“Lesson navigation“>
-<div className=“lesson-navigation__heading“>
+<nav className="lesson-navigation" aria-label="Lesson navigation">
+<div className="lesson-navigation__heading">
 <div>
-<span className=“lesson-navigation__chapter“>{chapterTitle}</span>
+<span className="lesson-navigation__chapter">{chapterTitle}</span>
 <h2>{lessonTitle}</h2>
 </div>
-<span className=“lesson-navigation__count“>
+<span className="lesson-navigation__count">
 Lesson {currentLesson} of {totalLessons}
 </span>
 </div>
