@@ -1,0 +1,152 @@
+.python-workspace {
+  margin: 28px 0;
+  overflow: hidden;
+  border: 1px solid #dbe3ed;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.python-workspace__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.python-workspace__label {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.python-workspace__header h3 {
+  margin: 6px 0 0;
+  color: #0f172a;
+  font-size: 19px;
+}
+
+.python-workspace__language {
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.python-workspace__editor {
+  background: #1e1e1e;
+}
+
+.python-workspace__toolbar {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.python-workspace__toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.python-workspace__run {
+  background: #2563eb;
+  color: #fff;
+}
+
+.python-workspace__run:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.python-workspace__reset {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.python-workspace__reset:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.python-workspace__toolbar button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.python-workspace__toolbar button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+.python-workspace__output {
+  padding: 20px 24px;
+  background: #f8fafc;
+}
+
+.python-workspace__output-title {
+  margin-bottom: 12px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.python-workspace__output pre {
+  min-height: 44px;
+  margin: 0;
+  color: #0f172a;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.python-workspace__output pre.python-workspace__error {
+  color: #b91c1c;
+}
+
+@media (max-width: 600px) {
+  .python-workspace__header,
+  .python-workspace__output {
+    padding: 16px;
+  }
+
+  .python-workspace__toolbar {
+    padding: 12px;
+  }
+}
+
+.python-workspace__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.python-workspace__expand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid #dbe3ef;
+  border-radius: 7px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.python-workspace__expand:hover {
+  background: #f1f5f9;
+}
