@@ -1,4 +1,4 @@
-import { useState } from "react";
+import LessonManager from "./LessonManager";
 import "./AdminDashboard.css";
 
 const lessons = [
@@ -9,12 +9,6 @@ const lessons = [
 
 export default function AdminDashboard() {
 // Filter lesson previews using the search box.
-const [search, setSearch] = useState("");
-
-const filteredLessons = lessons.filter((lesson) =>
-lesson.title.toLowerCase().includes(search.toLowerCase())
-);
-
 return (
 <div className="admin-layout">
 <aside className="admin-sidebar">
@@ -50,50 +44,7 @@ return (
       </div>
     </section>
 
-    <section id="lessons" className="admin-lessons">
-      <div className="admin-section-heading">
-        <h2>Lesson Management</h2>
-        <span>Preview only</span>
-      </div>
-
-      <input
-        type="search"
-        placeholder="Search lessons..."
-        aria-label="Search lessons"
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-      />
-
-      <div className="admin-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Lesson</th>
-              <th>Chapter</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLessons.map((lesson) => (
-              <tr key={lesson.id}>
-                <td>{lesson.title}</td>
-                <td>{lesson.chapter}</td>
-                <td>
-                  <span className={`admin-status ${lesson.status.toLowerCase()}`}>
-                    {lesson.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-            {filteredLessons.length === 0 && (
-              <tr>
-                <td colSpan={3}>No matching lessons found.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <LessonManager />
   </main>
 </div>
 
