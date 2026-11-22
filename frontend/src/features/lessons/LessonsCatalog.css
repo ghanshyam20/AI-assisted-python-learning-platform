@@ -221,3 +221,18 @@
     transition: none;
   }
 }
+
+.lessons-lesson-link {
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lessons-lesson-link:hover {
+  text-decoration: underline;
+}
+
+.lessons-lesson-link:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 4px;
+}

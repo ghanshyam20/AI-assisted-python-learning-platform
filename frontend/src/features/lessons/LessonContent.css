@@ -1,92 +1,92 @@
-﻿.lesson-content {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  color: #15213A;
+.lesson-content {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #15213A;
 }
 
 .lesson-content-header {
-  padding: 36px;
-  background: linear-gradient(120deg, #142D5C, #2453CF);
-  border-radius: 18px;
-  color: white;
-  margin-bottom: 24px;
+  padding: 36px;
+  background: linear-gradient(120deg, #142D5C, #2453CF);
+  border-radius: 18px;
+  color: white;
+  margin-bottom: 24px;
 }
 
 .lesson-content-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  margin-bottom: 14px;
-  color: #C7D9FF;
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+  color: #C7D9FF;
 }
 
 .lesson-content-header h1 {
-  font-size: 32px;
-  margin: 0 0 12px;
+  font-size: 32px;
+  margin: 0 0 12px;
 }
 
 .lesson-content-header p {
-  color: #E2EBFF;
-  line-height: 1.7;
-  margin: 0;
+  color: #E2EBFF;
+  line-height: 1.7;
+  margin: 0;
 }
 
 .lesson-content-section {
-  background: white;
-  border: 1px solid #E1E7F0;
-  border-radius: 16px;
-  padding: 28px;
-  margin-bottom: 20px;
+  background: white;
+  border: 1px solid #E1E7F0;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
 }
 
 .lesson-content-section h2 {
-  font-size: 21px;
-  margin: 0 0 16px;
+  font-size: 21px;
+  margin: 0 0 16px;
 }
 
 .lesson-content-section p,
 .lesson-content-section li {
-  color: #52627A;
-  line-height: 1.8;
+  color: #52627A;
+  line-height: 1.8;
 }
 
 .lesson-content-section ul {
-  padding-left: 22px;
+  padding-left: 22px;
 }
 
 .lesson-code-block {
-  background: #111D33;
-  color: #E6EDF8;
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 18px 0;
+  background: #111D33;
+  color: #E6EDF8;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 18px 0;
 }
 
 .lesson-code-heading {
-  background: #1C2D49;
-  padding: 12px 18px;
-  color: #A9C2ED;
-  font-size: 12px;
-  font-weight: 700;
+  background: #1C2D49;
+  padding: 12px 18px;
+  color: #A9C2ED;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .lesson-code-block pre {
-  padding: 22px;
-  margin: 0;
-  overflow-x: auto;
-  font-size: 14px;
-  line-height: 1.7;
+  padding: 22px;
+  margin: 0;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 @media (max-width: 640px) {
-  .lesson-content-header,
-  .lesson-content-section {
-    padding: 22px;
-  }
+  .lesson-content-header,
+  .lesson-content-section {
+    padding: 22px;
+  }
 
-  .lesson-content-header h1 {
-    font-size: 26px;
-  }
+  .lesson-content-header h1 {
+    font-size: 26px;
+  }
 }

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (
-    Chapter, Lesson, Exercise,
-    ExerciseAttempt, StudentProgress,
+    Chapter, Lesson, LessonPage, PageBlock,
+    Exercise, ExerciseAttempt, StudentProgress,
 )
 
 
@@ -10,6 +10,22 @@ class LessonInline(admin.TabularInline):
     extra = 0
     fields = ("title", "slug", "position", "published")
     show_change_link = True
+
+
+class LessonPageInline(admin.TabularInline):
+    # Show the pages belonging to each lesson.
+    model = LessonPage
+    extra = 0
+    fields = ("title", "position", "published")
+    show_change_link = True
+
+
+class PageBlockInline(admin.TabularInline):
+    # Keep page content in its display order.
+    model = PageBlock
+    extra = 1
+    fields = ("position", "block_type", "content")
+    ordering = ("position",)
 
 
 @admin.register(Chapter)
@@ -26,6 +42,18 @@ class LessonAdmin(admin.ModelAdmin):
     search_fields = ("title", "introduction")
     prepopulated_fields = {"slug": ("title",)}
     list_editable = ("position", "published")
+    inlines = [LessonPageInline]
+
+
+@admin.register(LessonPage)
+class LessonPageAdmin(admin.ModelAdmin):
+    # Edit all content blocks from their lesson page.
+    list_display = ("title", "lesson", "position", "published")
+    list_filter = ("lesson__chapter", "lesson", "published")
+    list_editable = ("position", "published")
+    search_fields = ("title", "lesson__title")
+    ordering = ("lesson", "position")
+    inlines = [PageBlockInline]
 
 
 @admin.register(Exercise)

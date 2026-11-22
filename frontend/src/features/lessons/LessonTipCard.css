@@ -1,69 +1,69 @@
 .lesson-tip-card {
-  padding: 24px;
-  background: #F0F7FF;
-  border: 1px solid #BFDBFE;
-  border-radius: 16px;
-  margin: 20px 0;
+  padding: 24px;
+  background: #F0F7FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 16px;
+  margin: 20px 0;
 }
 
 .lesson-tip-card__header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #1D4ED8;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1D4ED8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .lesson-tip-card h3 {
-  margin: 14px 0 8px;
-  color: #0F172A;
-  font-size: 18px;
+  margin: 14px 0 8px;
+  color: #0F172A;
+  font-size: 18px;
 }
 
 .lesson-tip-card p {
-  color: #475569;
-  line-height: 1.7;
+  color: #475569;
+  line-height: 1.7;
 }
 
 .lesson-tip-card button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  background: #FFFFFF;
-  border: 1px solid #93C5FD;
-  border-radius: 8px;
-  color: #1D4ED8;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #FFFFFF;
+  border: 1px solid #93C5FD;
+  border-radius: 8px;
+  color: #1D4ED8;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .lesson-tip-card button:hover {
-  background: #DBEAFE;
+  background: #DBEAFE;
 }
 
 .lesson-tip-card button:focus-visible {
-  outline: 3px solid #60A5FA;
-  outline-offset: 2px;
+  outline: 3px solid #60A5FA;
+  outline-offset: 2px;
 }
 
 .lesson-tip-card__example {
-  margin: 16px 0 0;
-  padding: 16px;
-  background: #0F172A;
-  color: #E2E8F0;
-  border-radius: 10px;
-  overflow-x: auto;
-  font-size: 13px;
-  line-height: 1.7;
+  margin: 16px 0 0;
+  padding: 16px;
+  background: #0F172A;
+  color: #E2E8F0;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 @media (max-width: 600px) {
-  .lesson-tip-card {
-    padding: 18px;
-  }
+  .lesson-tip-card {
+    padding: 18px;
+  }
 }

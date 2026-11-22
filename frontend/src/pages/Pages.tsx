@@ -1,3 +1,4 @@
+import { PracticePage } from '../features/practice/PracticePage'
 import { LessonsCatalog } from '../features/lessons/LessonsCatalog'
 import '../features/dashboard/dashboard.css'
 import { PythonTipCard } from '../features/dashboard/PythonTipCard'
@@ -129,12 +130,7 @@ export function Lessons() {
 }
 
 export function Practice() {
-  return (
-    <Page
-      title="Coding Practice"
-      description="Improve your Python skills by solving exercises."
-    />
-  )
+  return <PracticePage />
 }
 
 export function Progress() {
