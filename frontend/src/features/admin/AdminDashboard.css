@@ -174,4 +174,70 @@
     align-items: flex-start;
     flex-direction: column;
   }
+}/* Keep the admin brand readable against the dark sidebar. */
+.admin-layout .admin-sidebar h2 {
+  color: #FFFFFF;
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 0;
+}
+
+/* Give the lesson form a clear layout and visual separation. */
+.admin-layout .admin-lessons form {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+}
+
+.admin-layout .admin-lessons form h3 {
+  margin: 0 0 8px;
+  color: #17243B;
+  font-size: 17px;
+}
+
+/* Keep form fields evenly spaced without extra bottom margins. */
+.admin-layout .admin-lessons form input {
+  margin-bottom: 0;
+}
+
+/* Make primary admin actions easy to recognize and click. */
+.admin-layout .admin-lessons button {
+  width: fit-content;
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563EB;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-layout .admin-lessons button:hover {
+  background: #1D4ED8;
+}
+
+.admin-layout .admin-lessons button:focus-visible {
+  outline: 3px solid #93C5FD;
+  outline-offset: 2px;
+}
+
+/* Display lesson status clearly in the management table. */
+.admin-layout .admin-lessons td:last-child {
+  font-weight: 600;
+}
+
+/* Prevent the sidebar from becoming too narrow on small screens. */
+@media (max-width: 750px) {
+  .admin-layout .admin-sidebar {
+    width: 100%;
+  }
+
+  .admin-layout .admin-lessons form {
+    padding: 16px;
+  }
 }
