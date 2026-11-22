@@ -100,3 +100,74 @@ class StudentProgress(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.xp} XP"
+
+
+class AIUsage(models.Model):
+    STATUSES = [
+        ("reserved", "Reserved"),
+        ("completed", "Completed"),
+        ("failed", "Failed"),
+    ]
+
+    student = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="ai_usage",
+    )
+    status = models.CharField(
+        max_length=12,
+        choices=STATUSES,
+        default="reserved",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+
+class LessonPage(models.Model):
+    lesson = models.ForeignKey(
+        Lesson,
+        on_delete=models.CASCADE,
+        related_name="pages",
+    )
+    title = models.CharField(max_length=160)
+    position = models.PositiveIntegerField(default=1)
+    published = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["position", "id"]
+
+    def __str__(self):
+        return f"{self.lesson.title} - {self.title}"
+
+
+class PageBlock(models.Model):
+    BLOCK_TYPES = [
+        ("heading", "Heading"),
+        ("paragraph", "Paragraph"),
+        ("bullets", "Bullet list"),
+        ("numbered", "Numbered list"),
+        ("code", "Python code"),
+        ("output", "Example output"),
+        ("tip", "Learning tip"),
+        ("note", "Important note"),
+    ]
+
+    page = models.ForeignKey(
+        LessonPage,
+        on_delete=models.CASCADE,
+        related_name="blocks",
+    )
+    block_type = models.CharField(
+        max_length=20,
+        choices=BLOCK_TYPES,
+    )
+    content = models.TextField()
+    position = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        ordering = ["position", "id"]
+
+    def __str__(self):
+        return f"{self.get_block_type_display()} - {self.page.title}"

@@ -2,11 +2,13 @@ import { useRef, useState } from 'react'
 import Editor from '@monaco-editor/react'
 import type { PyodideInterface } from 'pyodide'
 import { Play, RotateCcw, LoaderCircle, Maximize2, Minimize2 } from 'lucide-react'
+import { ExerciseHints } from '../../practice/ExerciseHints'
 import './PythonEditor.css'
 
 type PythonEditorProps = {
   initialCode: string
   onRun?: (output: string) => void
+  exerciseId?: number
 }
 
 let runtimePromise: Promise<PyodideInterface> | null = null
@@ -38,7 +40,7 @@ function getPythonRuntime() {
   return runtimePromise
 }
 
-export function PythonEditor({ initialCode, onRun }: PythonEditorProps) {
+export function PythonEditor({ initialCode, onRun, exerciseId }: PythonEditorProps) {
   const [code, setCode] = useState(initialCode)
   const [output, setOutput] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'running'>('idle')
@@ -91,7 +93,11 @@ export function PythonEditor({ initialCode, onRun }: PythonEditorProps) {
     setError(false)
   }
 
-  return (
+  function renderWorkspace(
+    hintButton: React.ReactNode = null,
+    hintContent: React.ReactNode = null,
+  ) {
+    return (
     <section className="python-workspace">
       <div className="python-workspace__header">
         <div>
@@ -156,6 +162,8 @@ export function PythonEditor({ initialCode, onRun }: PythonEditorProps) {
           <RotateCcw size={16} />
           Reset
         </button>
+
+        {hintButton}
       </div>
 
       <div className="python-workspace__output">
@@ -164,6 +172,18 @@ export function PythonEditor({ initialCode, onRun }: PythonEditorProps) {
           {output || 'Run your code to see the result here.'}
         </pre>
       </div>
+      {hintContent}
     </section>
+    )
+  }
+
+  return exerciseId === undefined ? (
+    renderWorkspace()
+  ) : (
+    <ExerciseHints exerciseId={exerciseId}>
+      {(hintButton, hintContent) =>
+        renderWorkspace(hintButton, hintContent)
+      }
+    </ExerciseHints>
   )
 }

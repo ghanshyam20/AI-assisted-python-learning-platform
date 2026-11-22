@@ -1,3 +1,4 @@
+import { LessonPage } from './features/lessons/LessonPage'
 import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import {
@@ -102,6 +103,10 @@ function App() {
         <Route
           path="/lessons"
           element={<StudentLayout><Lessons /></StudentLayout>}
+        />
+        <Route
+          path="/lessons/:slug"
+          element={<StudentLayout><LessonPage /></StudentLayout>}
         />
         <Route
           path="/practice"
