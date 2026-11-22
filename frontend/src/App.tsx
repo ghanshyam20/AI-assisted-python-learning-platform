@@ -1,4 +1,5 @@
-import AdminDashboard from “./features/admin/AdminDashboard”;rnimport { LessonPage } from './features/lessons/LessonPage'
+import AdminDashboard from "./features/admin/AdminDashboard";
+import { LessonPage } from './features/lessons/LessonPage'
 import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import {
@@ -117,6 +118,7 @@ function App() {
           element={<StudentLayout><Progress /></StudentLayout>}
         />
 
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

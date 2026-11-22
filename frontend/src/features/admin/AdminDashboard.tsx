@@ -1,27 +1,27 @@
-import { useState } from “react”;
-import “./AdminDashboard.css”;
+import { useState } from "react";
+import "./AdminDashboard.css";
 
 const lessons = [
-{ id: 1, title: “Introduction to Variables”, chapter: “Python Basics”, status: “Published” },
-{ id: 2, title: “Python Data Types”, chapter: “Python Basics”, status: “Draft” },
-{ id: 3, title: “Input and Output”, chapter: “Python Basics”, status: “Draft” },
+{ id: 1, title: "Introduction to Variables", chapter: "Python Basics", status: "Published" },
+{ id: 2, title: "Python Data Types", chapter: "Python Basics", status: "Draft" },
+{ id: 3, title: "Input and Output", chapter: "Python Basics", status: "Draft" },
 ];
 
 export default function AdminDashboard() {
 // Filter lesson previews using the search box.
-const [search, setSearch] = useState(“”);
+const [search, setSearch] = useState("");
 
 const filteredLessons = lessons.filter((lesson) =>
 lesson.title.toLowerCase().includes(search.toLowerCase())
 );
 
 return (
-<div className=“admin-layout”>
-<aside className=“admin-sidebar”>
+<div className="admin-layout">
+<aside className="admin-sidebar">
 <h2>PyLearn Admin</h2>
 <nav>
-<a href=“#overview”>Overview</a>
-<a href=“#lessons”>Lessons</a>
+<a href="#overview">Overview</a>
+<a href="#lessons">Lessons</a>
 </nav>
 <p>Content Management</p>
 </aside>
