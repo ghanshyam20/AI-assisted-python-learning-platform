@@ -279,3 +279,19 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+/* Admin login shares the student login design but clearly identifies
+   restricted content-management access. */
+.admin-login-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -8px 0 24px;
+  padding: 12px 14px;
+  border: 1px solid #BFDBFE;
+  border-radius: var(--radius-control);
+  background: #EFF6FF;
+  color: #1D4ED8;
+  font-size: 13px;
+  font-weight: 600;
+}

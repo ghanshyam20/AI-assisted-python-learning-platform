@@ -1,52 +1,108 @@
+import { useCallback, useEffect, useState } from "react";
+import ChapterManager from "./ChapterManager";
 import LessonManager from "./LessonManager";
+import { adminApi, type Chapter, type Lesson } from "./adminApi";
 import "./AdminDashboard.css";
 
-const lessons = [
-{ id: 1, title: "Introduction to Variables", chapter: "Python Basics", status: "Published" },
-{ id: 2, title: "Python Data Types", chapter: "Python Basics", status: "Draft" },
-{ id: 3, title: "Input and Output", chapter: "Python Basics", status: "Draft" },
-];
-
 export default function AdminDashboard() {
-// Filter lesson previews using the search box.
-return (
-<div className="admin-layout">
-<aside className="admin-sidebar">
-<h2>PyLearn Admin</h2>
-<nav>
-<a href="#overview">Overview</a>
-<a href="#lessons">Lessons</a>
-</nav>
-<p>Content Management</p>
-</aside>
+  const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  <main className="admin-main">
-    <header className="admin-header">
-      <div>
-        <h1>Admin Dashboard</h1>
-        <p>Manage your Python learning content.</p>
-      </div>
-      <span className="admin-role">Administrator</span>
-    </header>
+  // Keep dashboard statistics and the lesson table synchronized with
+  // the same database-backed response rather than separate local copies.
+  const loadContent = useCallback(async () => {
+    setLoading(true);
+    setError("");
 
-    <section id="overview" className="admin-stats">
-      <div className="admin-stat-card">
-        <span>Total Lessons</span>
-        <strong>{lessons.length}</strong>
-      </div>
-      <div className="admin-stat-card">
-        <span>Published</span>
-        <strong>{lessons.filter((l) => l.status === "Published").length}</strong>
-      </div>
-      <div className="admin-stat-card">
-        <span>Drafts</span>
-        <strong>{lessons.filter((l) => l.status === "Draft").length}</strong>
-      </div>
-    </section>
+    try {
+      const [chapterData, lessonData] = await Promise.all([
+        adminApi.chapters.list(),
+        adminApi.lessons.list(),
+      ]);
 
-    <LessonManager />
-  </main>
-</div>
+      setChapters(chapterData);
+      setLessons(lessonData);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to load content."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-);
+  useEffect(() => {
+    void loadContent();
+  }, [loadContent]);
+
+  const publishedCount = lessons.filter(
+    (lesson) => lesson.published
+  ).length;
+
+  return (
+    <div className="admin-layout">
+      <aside className="admin-sidebar">
+        <h2>PyLearn Admin</h2>
+        <nav>
+          <a href="#overview">Overview</a>
+          <a href="#chapters">Chapters</a>
+          <a href="#lessons">Lessons</a>
+        </nav>
+        <p>Content Management</p>
+      </aside>
+
+      <main className="admin-main">
+        <header className="admin-header">
+          <div>
+            <h1>Admin Dashboard</h1>
+            <p>Manage your Python learning content.</p>
+          </div>
+          <span className="admin-role">Administrator</span>
+        </header>
+
+        <section id="overview" className="admin-stats">
+          <div className="admin-stat-card">
+            <span>Total Lessons</span>
+            <strong>{loading ? "—" : lessons.length}</strong>
+          </div>
+
+          <div className="admin-stat-card">
+            <span>Published</span>
+            <strong>{loading ? "—" : publishedCount}</strong>
+          </div>
+
+          <div className="admin-stat-card">
+            <span>Drafts</span>
+            <strong>
+              {loading ? "—" : lessons.length - publishedCount}
+            </strong>
+          </div>
+        </section>
+
+        {error && (
+          <div className="admin-error" role="alert">
+            <p>{error}</p>
+            <button type="button" onClick={() => void loadContent()}>
+              Try Again
+            </button>
+          </div>
+        )}
+
+        <ChapterManager
+          chapters={chapters}
+          loading={loading}
+          onRefresh={loadContent}
+        />
+
+        <LessonManager
+          chapters={chapters}
+          lessons={lessons}
+          loading={loading}
+          onRefresh={loadContent}
+        />
+      </main>
+    </div>
+  );
 }

@@ -1,105 +1,168 @@
-import { useState } from 'react';
-import { initialLessons, type AdminLesson } from './adminLessonData';
+import { useState, type FormEvent } from "react";
+import { adminApi, type Chapter, type Lesson } from "./adminApi";
 
-/**
- * Manages lessons in the frontend until the Django API is connected.
- * Lesson changes are temporary and reset when the page reloads.
- */
-export default function LessonManager() {
-  const [lessons, setLessons] = useState<AdminLesson[]>(initialLessons);
-  const [search, setSearch] = useState('');
-  const [title, setTitle] = useState('');
-  const [chapter, setChapter] = useState('');
+type LessonManagerProps = {
+  chapters: Chapter[];
+  lessons: Lesson[];
+  loading: boolean;
+  onRefresh: () => Promise<void>;
+};
 
-  // Only display lessons matching the administrator's search.
-  const filteredLessons = lessons.filter((lesson) =>
-    lesson.title.toLowerCase().includes(search.toLowerCase())
-  );
+export default function LessonManager({
+  chapters,
+  lessons,
+  loading,
+  onRefresh,
+}: LessonManagerProps) {
+  const [search, setSearch] = useState("");
+  const [title, setTitle] = useState("");
+  const [chapterId, setChapterId] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  // Validate the form before adding a new draft lesson.
-  function createLesson(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const filteredLessons = lessons.filter((lesson) =>
+    `${lesson.title} ${lesson.chapter_title}`
+      .toLowerCase()
+      .includes(search.toLowerCase().trim())
+  );
 
-    if (!title.trim() || !chapter.trim()) {
-      return;
-    }
+  async function createLesson(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-    const newLesson: AdminLesson = {
-      id: Date.now(),
-      title: title.trim(),
-      chapter: chapter.trim(),
-      status: 'Draft',
-    };
+    if (!title.trim() || !chapterId) {
+      setFormError("Enter a lesson title and select a chapter.");
+      return;
+    }
 
-    setLessons((current) => [...current, newLesson]);
-    setTitle('');
-    setChapter('');
-  }
+    setSaving(true);
+    setFormError("");
+    setSuccess("");
 
-  return (
-    <section className='admin-lessons'>
-      <div className='admin-section-heading'>
-        <h2>Lesson Management</h2>
-        <span>Frontend preview</span>
-      </div>
+    try {
+      // New lessons are always drafts. Publication will be handled by
+      // a separate validated workflow once page editing is complete.
+      await adminApi.lessons.create({
+        title: title.trim(),
+        chapter: Number(chapterId),
+        published: false,
+      });
 
-      <form onSubmit={createLesson}>
-        <h3>Create Lesson</h3>
+      setTitle("");
+      setChapterId("");
+      setSuccess("Draft lesson created successfully.");
 
-        <input
-          type='text'
-          placeholder='Lesson title'
-          aria-label='Lesson title'
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          required
-        />
+      await onRefresh();
+    } catch (err) {
+      setFormError(
+        err instanceof Error ? err.message : "Unable to create lesson."
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
 
-        <input
-          type='text'
-          placeholder='Chapter name'
-          aria-label='Chapter name'
-          value={chapter}
-          onChange={(event) => setChapter(event.target.value)}
-          required
-        />
+  return (
+    <section id="lessons" className="admin-lessons">
+      <div className="admin-section-heading">
+        <h2>Lesson Management</h2>
+        <span>Database connected</span>
+      </div>
 
-        <button type='submit'>Create Lesson</button>
-      </form>
+      <form onSubmit={createLesson}>
+        <h3>Create Draft Lesson</h3>
 
-      <input
-        type='search'
-        placeholder='Search lessons...'
-        aria-label='Search lessons'
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-      />
+        <input
+          type="text"
+          placeholder="Lesson title"
+          aria-label="Lesson title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          disabled={saving || loading}
+          required
+        />
 
-      <div className='admin-table-wrap'>
-        <table>
-          <thead>
-            <tr>
-              <th>Lesson</th>
-              <th>Chapter</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLessons.map((lesson) => (
-              <tr key={lesson.id}>
-                <td>{lesson.title}</td>
-                <td>{lesson.chapter}</td>
-                <td>{lesson.status}</td>
-              </tr>
-            ))}
-            {filteredLessons.length === 0 && (
-              <tr>
-                <td colSpan={3}>No matching lessons found.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
+        <select
+          aria-label="Select chapter"
+          value={chapterId}
+          onChange={(event) => setChapterId(event.target.value)}
+          disabled={saving || loading || chapters.length === 0}
+          required
+        >
+          <option value="">Select a chapter</option>
+          {chapters.map((chapter) => (
+            <option key={chapter.id} value={chapter.id}>
+              {chapter.title}
+              {!chapter.published ? " (Draft)" : ""}
+            </option>
+          ))}
+        </select>
+
+        {chapters.length === 0 && !loading && (
+          <p>No chapters available. Create a chapter first.</p>
+        )}
+
+        <button
+          type="submit"
+          disabled={saving || loading || chapters.length === 0}
+        >
+          {saving ? "Saving..." : "Create Lesson"}
+        </button>
+
+        {formError && <p role="alert" className="admin-error-text">{formError}</p>}
+        {success && <p role="status" className="admin-success-text">{success}</p>}
+      </form>
+
+      <input
+        type="search"
+        placeholder="Search lessons..."
+        aria-label="Search lessons"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+      />
+
+      <div className="admin-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Lesson</th>
+              <th>Chapter</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={3}>Loading lessons...</td>
+              </tr>
+            ) : filteredLessons.length === 0 ? (
+              <tr>
+                <td colSpan={3}>
+                  {lessons.length === 0
+                    ? "No lessons created yet."
+                    : "No matching lessons found."}
+                </td>
+              </tr>
+            ) : (
+              filteredLessons.map((lesson) => (
+                <tr key={lesson.id}>
+                  <td>{lesson.title}</td>
+                  <td>{lesson.chapter_title}</td>
+                  <td>
+                    <span
+                      className={`admin-status ${
+                        lesson.published ? "published" : "draft"
+                      }`}
+                    >
+                      {lesson.published ? "Published" : "Draft"}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
 }
