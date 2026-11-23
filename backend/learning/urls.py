@@ -1,5 +1,12 @@
 from .exercise_views import GenerateExerciseView, ExerciseHintView
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+from .management_api import (
+    ManageChapterViewSet,
+    ManageLessonViewSet,
+    ManageLessonPageViewSet,
+    ManagePageBlockViewSet,
+)
 from .views import ChapterListView, LessonDetailView
 
 urlpatterns = [
@@ -11,4 +18,25 @@ urlpatterns = [
         LessonDetailView.as_view(),
         name="lesson-detail",
     ),
+]
+
+
+# Keep content-management routes separate from student learning endpoints.
+# Every registered viewset independently enforces staff authorization.
+management_router = DefaultRouter()
+management_router.register(
+    "chapters", ManageChapterViewSet, basename="manage-chapters"
+)
+management_router.register(
+    "lessons", ManageLessonViewSet, basename="manage-lessons"
+)
+management_router.register(
+    "pages", ManageLessonPageViewSet, basename="manage-pages"
+)
+management_router.register(
+    "blocks", ManagePageBlockViewSet, basename="manage-blocks"
+)
+
+urlpatterns += [
+    path("manage/", include(management_router.urls)),
 ]

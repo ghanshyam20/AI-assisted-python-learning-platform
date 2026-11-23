@@ -13,6 +13,7 @@ import {
 import { LandingPage } from './features/landing/LandingPage'
 import { RegisterPage } from './features/auth/RegisterPage'
 import { LoginPage } from './features/auth/LoginPage'
+import { AdminLoginPage } from './features/auth/AdminLoginPage'
 import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { authApi } from './lib/api'
 import {
@@ -95,6 +96,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin-login" element={<AdminLoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
         <Route
@@ -118,7 +120,15 @@ function App() {
           element={<StudentLayout><Progress /></StudentLayout>}
         />
 
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        {/* Only authenticated Django staff may access content management. */}
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute requireStaff>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

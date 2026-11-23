@@ -175,3 +175,84 @@
     flex-direction: column;
   }
 }
+/* Global heading styles must not override the dark sidebar heading. */
+.admin-sidebar h2 {
+  color: #FFFFFF;
+}
+
+.admin-lessons select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background: #FFFFFF;
+  color: #17243B;
+  font-size: 15px;
+}
+
+.admin-lessons button,
+.admin-error button {
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563EB;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-lessons button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.admin-lessons form {
+  margin-bottom: 28px;
+}
+
+.admin-lessons form h3 {
+  margin-bottom: 16px;
+}
+
+.admin-error {
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid #FECACA;
+  border-radius: 10px;
+  background: #FEF2F2;
+  color: #991B1B;
+}
+
+.admin-error-text {
+  margin-top: 12px;
+  color: #B91C1C;
+}
+
+.admin-success-text {
+  margin-top: 12px;
+  color: #166534;
+}
+
+/* Keep chapter and lesson forms visually consistent. */
+.admin-chapters {
+  margin-bottom: 24px;
+}
+
+.admin-lessons textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font: inherit;
+  resize: vertical;
+}
+
+.admin-lessons input:focus,
+.admin-lessons select:focus,
+.admin-lessons textarea:focus {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}

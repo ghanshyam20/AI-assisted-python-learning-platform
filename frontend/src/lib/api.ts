@@ -5,6 +5,8 @@ export type Student = {
   first_name: string
   last_name: string
   email: string
+  // Used for staff navigation; backend permissions enforce actual access.
+  is_staff: boolean
 }
 
 export type RegisterData = {
