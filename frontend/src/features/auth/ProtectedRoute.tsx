@@ -10,7 +10,16 @@ type AuthState =
   | { status: 'unauthenticated' }
   | { status: 'error' }
 
-export function ProtectedRoute({ children }: { children: ReactNode }) {
+type ProtectedRouteProps = {
+  children: ReactNode
+  // Admin routes require Django staff status in addition to authentication.
+  requireStaff?: boolean
+}
+
+export function ProtectedRoute({
+  children,
+  requireStaff = false,
+}: ProtectedRouteProps) {
   const location = useLocation()
   const [auth, setAuth] = useState<AuthState>({ status: 'checking' })
 
@@ -52,7 +61,7 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
   if (auth.status === 'unauthenticated') {
     return (
       <Navigate
-        to="/login"
+        to={requireStaff ? "/admin-login" : "/login"}
         replace
         state={{ from: location.pathname }}
       />
@@ -68,6 +77,14 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
         </div>
       </main>
     )
+  }
+
+  // A signed-in student must not enter staff-only application screens.
+  // Django must independently enforce permissions on every admin API.
+  if (requireStaff && !auth.user.is_staff) {
+    // Authenticated students cannot access administrator screens.
+    // Show the admin-specific access page rather than student navigation.
+    return <Navigate to="/admin-login" replace />
   }
 
   return <>{children}</>
