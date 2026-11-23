@@ -18,8 +18,6 @@ export default function ChapterManager({
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Keep editing separate from chapter creation so unsaved changes
-  // cannot accidentally modify another chapter.
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
@@ -43,7 +41,11 @@ export default function ChapterManager({
 
     if (editingId === null || saving) return;
 
-    if (!editTitle.trim() || !Number.isInteger(editPosition) || editPosition < 0) {
+    if (
+      !editTitle.trim() ||
+      !Number.isInteger(editPosition) ||
+      editPosition < 0
+    ) {
       setError("Enter a chapter title and a valid position.");
       return;
     }
@@ -53,8 +55,6 @@ export default function ChapterManager({
     setSuccess("");
 
     try {
-      // PATCH updates only the fields being edited and preserves
-      // the chapter's existing publication status.
       await adminApi.chapters.update(editingId, {
         title: editTitle.trim(),
         description: editDescription.trim(),
@@ -66,15 +66,20 @@ export default function ChapterManager({
       setSuccess("Chapter updated successfully.");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Unable to update chapter."
+        err instanceof Error
+          ? err.message
+          : "Unable to update chapter."
       );
     } finally {
       setSaving(false);
     }
+
   }
 
   async function createChapter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (saving || loading) return;
 
     if (!title.trim()) {
       setError("Chapter title is required.");
@@ -86,8 +91,6 @@ export default function ChapterManager({
     setSuccess("");
 
     try {
-      // Chapters start unpublished so incomplete course structures
-      // never become visible to students accidentally.
       await adminApi.chapters.create({
         title: title.trim(),
         description: description.trim(),
@@ -97,148 +100,294 @@ export default function ChapterManager({
 
       setTitle("");
       setDescription("");
-      setSuccess("Draft chapter created successfully.");
-
       await onRefresh();
+      setSuccess("Draft chapter created successfully.");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Unable to create chapter."
+        err instanceof Error
+          ? err.message
+          : "Unable to create chapter."
       );
     } finally {
       setSaving(false);
     }
+
+  }
+
+  async function togglePublished(chapter: Chapter) {
+    if (saving || loading) return;
+
+    setSaving(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      await adminApi.chapters.update(chapter.id, {
+        published: !chapter.published,
+      });
+
+      await onRefresh();
+
+      setSuccess(
+        chapter.published
+          ? "Chapter unpublished successfully."
+          : "Chapter published successfully."
+      );
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to update chapter status."
+      );
+    } finally {
+      setSaving(false);
+    }
+
+  }
+
+  async function deleteChapter(chapter: Chapter) {
+    if (saving || loading) return;
+
+    const confirmed = window.confirm(
+      `Delete chapter "${chapter.title}"? This cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
+    setSaving(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      await adminApi.chapters.remove(chapter.id);
+
+      if (editingId === chapter.id) {
+        setEditingId(null);
+      }
+
+      await onRefresh();
+      setSuccess("Chapter deleted successfully.");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to delete chapter."
+      );
+    } finally {
+      setSaving(false);
+    }
+
   }
 
   return (
-    <section id="chapters" className="admin-lessons admin-chapters">
-      <div className="admin-section-heading">
-        <h2>Chapter Management</h2>
-        <span>{chapters.length} chapters</span>
-      </div>
+<section
+id="chapters"
+className="admin-lessons admin-chapters"
+>
+<div className="admin-section-heading">
+<h2>Chapter Management</h2>
+<span>{chapters.length} chapters</span>
+</div>
 
-      <form onSubmit={createChapter}>
-        <h3>Create Draft Chapter</h3>
+  <form onSubmit={createChapter}>
+    <h3>Create Draft Chapter</h3>
+
+    <input
+      type="text"
+      placeholder="Chapter title"
+      aria-label="Chapter title"
+      value={title}
+      onChange={(event) => setTitle(event.target.value)}
+      disabled={saving || loading}
+      required
+    />
+
+    <textarea
+      placeholder="Chapter description (optional)"
+      aria-label="Chapter description"
+      value={description}
+      onChange={(event) => setDescription(event.target.value)}
+      disabled={saving || loading}
+      rows={3}
+    />
+
+    <button
+      type="submit"
+      disabled={saving || loading}
+    >
+      {saving ? "Saving..." : "Create Chapter"}
+    </button>
+
+    {error && (
+      <p role="alert" className="admin-error-text">
+        {error}
+      </p>
+    )}
+
+    {success && (
+      <p role="status" className="admin-success-text">
+        {success}
+      </p>
+    )}
+  </form>
+
+  {
+    editingId !== null && (
+      <form
+        className="admin-edit-form"
+        onSubmit={saveChapter}
+      >
+        <h3>Edit Chapter</h3>
+
+        <label htmlFor="edit-chapter-title">
+          Chapter title
+        </label>
 
         <input
-          type="text"
-          placeholder="Chapter title"
-          aria-label="Chapter title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          disabled={saving || loading}
+          id="edit-chapter-title"
+          value={editTitle}
+          onChange={(event) =>
+            setEditTitle(event.target.value)
+          }
+          disabled={saving}
           required
         />
 
+        <label htmlFor="edit-chapter-description">
+          Description
+        </label>
+
         <textarea
-          placeholder="Chapter description (optional)"
-          aria-label="Chapter description"
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-          disabled={saving || loading}
+          id="edit-chapter-description"
+          value={editDescription}
+          onChange={(event) =>
+            setEditDescription(event.target.value)
+          }
+          disabled={saving}
           rows={3}
         />
 
-        <button type="submit" disabled={saving || loading}>
-          {saving ? "Saving..." : "Create Chapter"}
-        </button>
+        <label htmlFor="edit-chapter-position">
+          Position
+        </label>
 
-        {error && <p role="alert" className="admin-error-text">{error}</p>}
-        {success && <p role="status" className="admin-success-text">{success}</p>}
+        <input
+          id="edit-chapter-position"
+          type="number"
+          min="0"
+          step="1"
+          value={editPosition}
+          onChange={(event) =>
+            setEditPosition(Number(event.target.value))
+          }
+          disabled={saving}
+          required
+        />
+
+        <div className="admin-edit-actions">
+          <button
+            type="submit"
+            disabled={saving}
+          >
+            {saving ? "Saving..." : "Save Changes"}
+          </button>
+
+          <button
+            type="button"
+            onClick={cancelEditing}
+            disabled={saving}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
+    )
+  }
 
-      {editingId !== null && (
-        <form className="admin-edit-form" onSubmit={saveChapter}>
-          <h3>Edit Chapter</h3>
+  <div className="admin-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Chapter</th>
+          <th>Position</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
 
-          <label htmlFor="edit-chapter-title">Chapter title</label>
-          <input
-            id="edit-chapter-title"
-            value={editTitle}
-            onChange={(event) => setEditTitle(event.target.value)}
-            disabled={saving}
-            required
-          />
+      <tbody>
+        {loading ? (
+          <tr>
+            <td colSpan={4}>
+              Loading chapters...
+            </td>
+          </tr>
+        ) : chapters.length === 0 ? (
+          <tr>
+            <td colSpan={4}>
+              No chapters created yet.
+            </td>
+          </tr>
+        ) : (
+          chapters.map((chapter) => (
+            <tr key={chapter.id}>
+              <td>{chapter.title}</td>
 
-          <label htmlFor="edit-chapter-description">Description</label>
-          <textarea
-            id="edit-chapter-description"
-            value={editDescription}
-            onChange={(event) => setEditDescription(event.target.value)}
-            disabled={saving}
-            rows={3}
-          />
+              <td>{chapter.position}</td>
 
-          <label htmlFor="edit-chapter-position">Position</label>
-          <input
-            id="edit-chapter-position"
-            type="number"
-            min="0"
-            step="1"
-            value={editPosition}
-            onChange={(event) => setEditPosition(Number(event.target.value))}
-            disabled={saving}
-            required
-          />
+              <td>
+                <span
+                  className={`admin-status ${chapter.published
+                      ? "published"
+                      : "draft"
+                    }`}
+                >
+                  {chapter.published
+                    ? "Published"
+                    : "Draft"}
+                </span>
+              </td>
 
-          <div className="admin-edit-actions">
-            <button type="submit" disabled={saving}>
-              {saving ? "Saving..." : "Save Changes"}
-            </button>
-            <button type="button" onClick={cancelEditing} disabled={saving}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      )}
+              <td>
+                <button
+                  type="button"
+                  onClick={() =>
+                    startEditing(chapter)
+                  }
+                  disabled={saving || loading}
+                >
+                  Edit
+                </button>
 
-      <div className="admin-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Chapter</th>
-              <th>Position</th>
-              <th>Status</th>
-              <th>Actions</th>
+                <button
+                  type="button"
+                  onClick={() =>
+                    void togglePublished(chapter)
+                  }
+                  disabled={saving || loading}
+                >
+                  {chapter.published
+                    ? "Unpublish"
+                    : "Publish"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    void deleteChapter(chapter)
+                  }
+                  disabled={saving || loading}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan={4}>Loading chapters...</td>
-              </tr>
-            ) : chapters.length === 0 ? (
-              <tr>
-                <td colSpan={4}>No chapters created yet.</td>
-              </tr>
-            ) : (
-              chapters.map((chapter) => (
-                <tr key={chapter.id}>
-                  <td>{chapter.title}</td>
-                  <td>{chapter.position}</td>
-                  <td>
-                    <span
-                      className={`admin-status ${
-                        chapter.published ? "published" : "draft"
-                      }`}
-                    >
-                      {chapter.published ? "Published" : "Draft"}
-                    </span>
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() => startEditing(chapter)}
-                      disabled={saving}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
+          ))
+        )}
+      </tbody>
+    </table>
+  </div>
+</section >
+
+);
 }
