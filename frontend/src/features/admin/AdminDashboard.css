@@ -279,3 +279,21 @@
   flex-wrap: wrap;
   gap: 10px;
 }
+.admin-header button {
+  padding: 10px 16px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #111827;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-header button:hover:not(:disabled) {
+  background: #F3F4F6;
+}
+
+.admin-header button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

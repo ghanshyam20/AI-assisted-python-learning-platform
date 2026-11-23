@@ -59,7 +59,8 @@ export default function AdminDashboard() {
             <h1>Admin Dashboard</h1>
             <p>Manage your Python learning content.</p>
           </div>
-          <span className="admin-role">Administrator</span>
+                    <button type="button" onClick={() => void loadContent()} disabled={loading}>{loading ? "Refreshing..." : "Refresh Content"}</button>
+<span className="admin-role">Administrator</span>
         </header>
 
         <section id="overview" className="admin-stats">
