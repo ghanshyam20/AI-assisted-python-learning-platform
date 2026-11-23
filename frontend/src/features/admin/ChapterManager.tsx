@@ -18,6 +18,61 @@ export default function ChapterManager({
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Keep editing separate from chapter creation so unsaved changes
+  // cannot accidentally modify another chapter.
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editPosition, setEditPosition] = useState(0);
+
+  function startEditing(chapter: Chapter) {
+    setEditingId(chapter.id);
+    setEditTitle(chapter.title);
+    setEditDescription(chapter.description);
+    setEditPosition(chapter.position);
+    setError("");
+    setSuccess("");
+  }
+
+  function cancelEditing() {
+    setEditingId(null);
+  }
+
+  async function saveChapter(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (editingId === null || saving) return;
+
+    if (!editTitle.trim() || !Number.isInteger(editPosition) || editPosition < 0) {
+      setError("Enter a chapter title and a valid position.");
+      return;
+    }
+
+    setSaving(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      // PATCH updates only the fields being edited and preserves
+      // the chapter's existing publication status.
+      await adminApi.chapters.update(editingId, {
+        title: editTitle.trim(),
+        description: editDescription.trim(),
+        position: editPosition,
+      });
+
+      setEditingId(null);
+      await onRefresh();
+      setSuccess("Chapter updated successfully.");
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to update chapter."
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
+
   async function createChapter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -91,6 +146,51 @@ export default function ChapterManager({
         {success && <p role="status" className="admin-success-text">{success}</p>}
       </form>
 
+      {editingId !== null && (
+        <form className="admin-edit-form" onSubmit={saveChapter}>
+          <h3>Edit Chapter</h3>
+
+          <label htmlFor="edit-chapter-title">Chapter title</label>
+          <input
+            id="edit-chapter-title"
+            value={editTitle}
+            onChange={(event) => setEditTitle(event.target.value)}
+            disabled={saving}
+            required
+          />
+
+          <label htmlFor="edit-chapter-description">Description</label>
+          <textarea
+            id="edit-chapter-description"
+            value={editDescription}
+            onChange={(event) => setEditDescription(event.target.value)}
+            disabled={saving}
+            rows={3}
+          />
+
+          <label htmlFor="edit-chapter-position">Position</label>
+          <input
+            id="edit-chapter-position"
+            type="number"
+            min="0"
+            step="1"
+            value={editPosition}
+            onChange={(event) => setEditPosition(Number(event.target.value))}
+            disabled={saving}
+            required
+          />
+
+          <div className="admin-edit-actions">
+            <button type="submit" disabled={saving}>
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
+            <button type="button" onClick={cancelEditing} disabled={saving}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
+
       <div className="admin-table-wrap">
         <table>
           <thead>
@@ -98,16 +198,17 @@ export default function ChapterManager({
               <th>Chapter</th>
               <th>Position</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={3}>Loading chapters...</td>
+                <td colSpan={4}>Loading chapters...</td>
               </tr>
             ) : chapters.length === 0 ? (
               <tr>
-                <td colSpan={3}>No chapters created yet.</td>
+                <td colSpan={4}>No chapters created yet.</td>
               </tr>
             ) : (
               chapters.map((chapter) => (
@@ -122,6 +223,15 @@ export default function ChapterManager({
                     >
                       {chapter.published ? "Published" : "Draft"}
                     </span>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => startEditing(chapter)}
+                      disabled={saving}
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))

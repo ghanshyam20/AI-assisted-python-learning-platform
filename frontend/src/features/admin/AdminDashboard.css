@@ -256,3 +256,26 @@
   outline: 2px solid #2563EB;
   outline-offset: 2px;
 }
+
+/* Chapter editing uses a separate form to avoid mixing saved
+   content with the new-chapter form. */
+.admin-edit-form {
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  background: #F8FAFC;
+}
+
+.admin-edit-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
