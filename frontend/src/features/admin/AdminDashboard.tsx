@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { LayoutDashboard, Library, BookOpen } from "lucide-react";
 import ChapterManager from "./ChapterManager";
 import LessonManager from "./LessonManager";
+import LessonPageManager from "./LessonPageManager";
 import { adminApi, type Chapter, type Lesson } from "./adminApi";
 import "./AdminDashboard.css";
 
 // Keep navigation limited to supported admin sections.
-type AdminSection = "overview" | "chapters" | "lessons";
+type AdminSection = "overview" | "chapters" | "lessons" | "pages";
 
 // Manage shared content data and dashboard navigation.
 export default function AdminDashboard() {
@@ -82,7 +83,8 @@ export default function AdminDashboard() {
             <BookOpen size={18} />
             <span>Lessons</span>
           </button>
-        </nav>
+        <button type="button" className={activeSection === "pages" ? "active" : ""} onClick={() => setActiveSection("pages")}><BookOpen size={18} /><span>Lesson Pages</span></button>
+</nav>
         <p>Content Management</p>
       </aside>
 
@@ -92,7 +94,7 @@ export default function AdminDashboard() {
             <h1>Admin Dashboard</h1>
             <p>Manage your Python learning content.</p>
           </div>
-                    <button type="button" onClick={() => void loadContent()} disabled={loading}>{loading ? "Refreshing..." : "Refresh Content"}</button>
+                    <button type="button" onClick={() => void loadContent()} disabled={loading}>{loading ? "-" : "Refresh Content"}</button>
 <span className="admin-role">Administrator</span>
         </header>
 
@@ -105,23 +107,23 @@ export default function AdminDashboard() {
         >
           <div className="admin-stat-card">
             <span>Total Chapters</span>
-            <strong>{loading ? "—" : chapters.length}</strong>
+            <strong>{loading ? "-" : chapters.length}</strong>
           </div>
 
           <div className="admin-stat-card">
             <span>Total Lessons</span>
-            <strong>{loading ? "—" : lessons.length}</strong>
+            <strong>{loading ? "-" : lessons.length}</strong>
           </div>
 
           <div className="admin-stat-card">
             <span>Published</span>
-            <strong>{loading ? "—" : publishedCount}</strong>
+            <strong>{loading ? "-" : publishedCount}</strong>
           </div>
 
           <div className="admin-stat-card">
             <span>Drafts</span>
             <strong>
-              {loading ? "—" : lessons.length - publishedCount}
+              {loading ? "-" : lessons.length - publishedCount}
             </strong>
           </div>
         </section>
@@ -153,7 +155,8 @@ export default function AdminDashboard() {
             onRefresh={loadContent}
           />
         )}
-      </main>
+      {activeSection === "pages" && (<LessonPageManager lessons={lessons} />)}
+</main>
     </div>
   );
 }
