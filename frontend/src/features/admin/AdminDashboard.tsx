@@ -1,10 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
+import { LayoutDashboard, Library, BookOpen } from "lucide-react";
 import ChapterManager from "./ChapterManager";
 import LessonManager from "./LessonManager";
 import { adminApi, type Chapter, type Lesson } from "./adminApi";
 import "./AdminDashboard.css";
 
+// Keep navigation limited to supported admin sections.
+type AdminSection = "overview" | "chapters" | "lessons";
+
+// Manage shared content data and dashboard navigation.
 export default function AdminDashboard() {
+  // Track the currently selected management section.
+  const [activeSection, setActiveSection] =
+    useState<AdminSection>("overview");
+
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,10 +54,34 @@ export default function AdminDashboard() {
     <div className="admin-layout">
       <aside className="admin-sidebar">
         <h2>PyLearn Admin</h2>
-        <nav>
-          <a href="#overview">Overview</a>
-          <a href="#chapters">Chapters</a>
-          <a href="#lessons">Lessons</a>
+        {/* Switch sections without reloading dashboard data. */}
+        <nav aria-label="Admin navigation">
+          <button
+            type="button"
+            className={activeSection === "overview" ? "active" : ""}
+            onClick={() => setActiveSection("overview")}
+          >
+            <LayoutDashboard size={18} />
+            <span>Overview</span>
+          </button>
+
+          <button
+            type="button"
+            className={activeSection === "chapters" ? "active" : ""}
+            onClick={() => setActiveSection("chapters")}
+          >
+            <Library size={18} />
+            <span>Chapters</span>
+          </button>
+
+          <button
+            type="button"
+            className={activeSection === "lessons" ? "active" : ""}
+            onClick={() => setActiveSection("lessons")}
+          >
+            <BookOpen size={18} />
+            <span>Lessons</span>
+          </button>
         </nav>
         <p>Content Management</p>
       </aside>
@@ -63,7 +96,18 @@ export default function AdminDashboard() {
 <span className="admin-role">Administrator</span>
         </header>
 
-        <section id="overview" className="admin-stats">
+        {/* Show content statistics on the overview page. */}
+        <section
+          id="overview"
+          className="admin-stats"
+          hidden={activeSection !== "overview"}
+          style={activeSection !== "overview" ? { display: "none" } : undefined}
+        >
+          <div className="admin-stat-card">
+            <span>Total Chapters</span>
+            <strong>{loading ? "—" : chapters.length}</strong>
+          </div>
+
           <div className="admin-stat-card">
             <span>Total Lessons</span>
             <strong>{loading ? "—" : lessons.length}</strong>
@@ -91,18 +135,24 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        <ChapterManager
-          chapters={chapters}
-          loading={loading}
-          onRefresh={loadContent}
-        />
+        {/* Display chapter management in its own section. */}
+        {activeSection === "chapters" && (
+          <ChapterManager
+            chapters={chapters}
+            loading={loading}
+            onRefresh={loadContent}
+          />
+        )}
 
-        <LessonManager
-          chapters={chapters}
-          lessons={lessons}
-          loading={loading}
-          onRefresh={loadContent}
-        />
+        {/* Display lessons with their assigned chapters. */}
+        {activeSection === "lessons" && (
+          <LessonManager
+            chapters={chapters}
+            lessons={lessons}
+            loading={loading}
+            onRefresh={loadContent}
+          />
+        )}
       </main>
     </div>
   );
