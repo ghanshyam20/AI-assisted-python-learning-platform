@@ -344,3 +344,88 @@
     grid-template-columns: 1fr;
   }
 }
+/* LESSON PAGES STYLING
+Keeps the lesson selector and page list consistent with the admin dashboard.
+*/
+
+.admin-content-section {
+width: 100%;
+max-width: 1050px;
+}
+
+.admin-content-section > label {
+display: block;
+margin: 24px 0 8px;
+font-size: 14px;
+font-weight: 600;
+color: #334155;
+}
+
+.admin-content-section > select {
+display: block;
+width: 100%;
+max-width: 380px;
+padding: 12px 14px;
+border: 1px solid #CBD5E1;
+border-radius: 8px;
+background: #FFFFFF;
+color: #0F172A;
+font-size: 14px;
+}
+
+.admin-content-section > select:focus {
+outline: 2px solid #2563EB;
+outline-offset: 2px;
+}
+
+.admin-page-list {
+display: grid;
+gap: 14px;
+margin-top: 24px;
+}
+
+.admin-page-card {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 20px;
+padding: 20px 24px;
+border: 1px solid #E2E8F0;
+border-radius: 12px;
+background: #FFFFFF;
+}
+
+.admin-page-card h3 {
+margin: 0 0 8px;
+font-size: 16px;
+color: #0F172A;
+}
+
+.admin-page-card p {
+margin: 0;
+font-size: 13px;
+color: #64748B;
+}
+
+/* Publication status: green for published pages, neutral for drafts. */
+.admin-page-card span {
+flex-shrink: 0;
+padding: 6px 12px;
+border-radius: 999px;
+background: #F1F5F9;
+color: #475569;
+font-size: 12px;
+font-weight: 600;
+}
+
+.admin-page-card span:first-letter {
+text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+.admin-page-card {
+align-items: flex-start;
+flex-direction: column;
+padding: 16px;
+}
+}
