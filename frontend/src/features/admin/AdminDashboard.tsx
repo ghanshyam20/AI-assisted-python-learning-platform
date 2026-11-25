@@ -12,8 +12,26 @@ type AdminSection = "overview" | "chapters" | "lessons" | "pages";
 // Manage shared content data and dashboard navigation.
 export default function AdminDashboard() {
   // Track the currently selected management section.
-  const [activeSection, setActiveSection] =
-    useState<AdminSection>("overview");
+  // Restore the last selected section after a browser refresh.
+  const [activeSection, setActiveSection] = useState<AdminSection>(() => {
+    const saved = sessionStorage.getItem("pylearn-admin-section");
+
+    if (
+      saved === "overview" ||
+      saved === "chapters" ||
+      saved === "lessons" ||
+      saved === "pages"
+    ) {
+      return saved;
+    }
+
+    return "overview";
+  });
+
+  // Remember navigation changes for this browser tab.
+  useEffect(() => {
+    sessionStorage.setItem("pylearn-admin-section", activeSection);
+  }, [activeSection]);
 
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
