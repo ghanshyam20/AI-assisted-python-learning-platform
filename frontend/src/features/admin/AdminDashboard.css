@@ -429,3 +429,237 @@ flex-direction: column;
 padding: 16px;
 }
 }
+
+/* ==========================================================
+   LESSON PAGE MANAGEMENT — CREATE, EDIT AND DELETE
+   Styles only the Lesson Pages section.
+   ========================================================== */
+
+/* Create-page form: clean card with aligned fields. */
+.admin-page-create-form {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(120px, 1fr);
+  gap: 12px 18px;
+  margin-top: 28px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.admin-page-create-form h3 {
+  grid-column: 1 / -1;
+  margin: 0 0 6px;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+/* Place each text label directly above its input. */
+.admin-page-create-form > label:not(:has(input)) {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: -8px;
+}
+
+.admin-page-create-form > label[for="new-page-title"] {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.admin-page-create-form > label[for="new-page-position"] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+#new-page-title {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+#new-page-position {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* Shared input styling for create and edit forms. */
+.admin-page-create-form > input,
+.admin-page-card form input:not([type="checkbox"]) {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 11px 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+}
+
+.admin-page-create-form input:focus,
+.admin-page-card form input:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+/* Keep the publication checkbox and its label together. */
+.admin-page-create-form > label:has(input[type="checkbox"]) {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: #334155;
+}
+
+.admin-page-create-form input[type="checkbox"],
+.admin-page-card form input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+}
+
+/* Main action button. */
+.admin-page-create-form > button {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 11px 20px;
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-page-create-form > button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+/* Page cards: align the title, publication status and actions. */
+.admin-page-card {
+  flex-wrap: wrap;
+}
+
+.admin-page-card > div:first-child {
+  flex: 1;
+  min-width: 160px;
+}
+
+/* Buttons for editing and deleting existing pages. */
+.admin-page-card > button {
+  padding: 9px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-page-card > button:hover {
+  background: #f1f5f9;
+}
+
+/* The last action is Delete: distinguish this destructive action. */
+.admin-page-card > button:last-child {
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.admin-page-card > button:last-child:hover {
+  background: #fef2f2;
+}
+
+/* Editing an existing page: display fields vertically. */
+.admin-page-card > form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 14px;
+  width: 100%;
+}
+
+.admin-page-card > form > label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.admin-page-card > form > label:first-child {
+  flex: 2 1 260px;
+}
+
+.admin-page-card > form > label:nth-child(2) {
+  flex: 1 1 130px;
+}
+
+.admin-page-card > form > label:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+/* Save and Cancel buttons inside the edit form. */
+.admin-page-card > form > button {
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-page-card > form > button[type="submit"] {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.admin-page-create-form button:disabled,
+.admin-page-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Small screens: stack form fields and page actions. */
+@media (max-width: 600px) {
+  .admin-page-create-form {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 18px;
+  }
+
+  .admin-page-create-form > label[for="new-page-title"],
+  #new-page-title,
+  .admin-page-create-form > label[for="new-page-position"],
+  #new-page-position {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .admin-page-create-form > label[for="new-page-title"] {
+    grid-row: 2;
+  }
+
+  #new-page-title {
+    grid-row: 3;
+  }
+
+  .admin-page-create-form > label[for="new-page-position"] {
+    grid-row: 4;
+  }
+
+  #new-page-position {
+    grid-row: 5;
+  }
+
+  .admin-page-card > form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
