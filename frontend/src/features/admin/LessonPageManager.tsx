@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminApi, type Lesson, type LessonPage } from "./adminApi";
+import LessonContentEditor from "./LessonContentEditor";
 
 type Props = {
   lessons: Lesson[];
@@ -7,6 +8,8 @@ type Props = {
 
 export default function LessonPageManager({ lessons }: Props) {
   const [lessonId, setLessonId] = useState("");
+  // Track the page currently open in the content editor.
+  const [selectedPage, setSelectedPage] = useState<LessonPage | null>(null);
   const [pages, setPages] = useState<LessonPage[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -174,6 +177,17 @@ export default function LessonPageManager({ lessons }: Props) {
     }
   }
 
+  // Show the editor instead of the page list when a page is selected.
+  if (selectedPage) {
+    return (
+      <LessonContentEditor
+        pageId={selectedPage.id}
+        pageTitle={selectedPage.title}
+        onBack={() => setSelectedPage(null)}
+      />
+    );
+  }
+
   return (
     <section className="admin-content-section">
       <div className="admin-section-heading">
@@ -307,6 +321,12 @@ export default function LessonPageManager({ lessons }: Props) {
                       <p>Page {page.position}</p>
                     </div>
                     <span>{page.published ? "Published" : "Draft"}</span>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedPage(page)}
+                    >
+                      Manage Content
+                    </button>
                     <button
                       type="button"
                       onClick={() => handleStartEdit(page)}

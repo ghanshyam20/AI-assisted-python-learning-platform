@@ -1,4 +1,8 @@
-import AdminDashboard from "./features/admin/AdminDashboard";
+import { lazy, Suspense } from "react";
+
+const AdminDashboard = lazy(
+  () => import("./features/admin/AdminDashboard")
+);
 import { LessonPage } from './features/lessons/LessonPage'
 import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
@@ -125,7 +129,9 @@ function App() {
           path="/admin-dashboard"
           element={
             <ProtectedRoute requireStaff>
-              <AdminDashboard />
+              <Suspense fallback={<p>Loading admin dashboard...</p>}>
+                <AdminDashboard />
+              </Suspense>
             </ProtectedRoute>
           }
         />
