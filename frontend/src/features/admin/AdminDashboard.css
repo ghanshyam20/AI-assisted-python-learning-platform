@@ -663,3 +663,192 @@ padding: 16px;
     align-items: stretch;
   }
 }
+
+/* ==========================================================
+   LESSON CONTENT EDITOR
+   Styles the form used to add content to a lesson page.
+   ========================================================== */
+
+/* Back button */
+.admin-content-section > button {
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-content-section > button:hover {
+  background: #f1f5f9;
+}
+
+/* Main form card */
+.admin-block-create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 760px;
+  margin: 28px 0;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+/* Form heading */
+.admin-block-create-form h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+/* Field labels */
+.admin-block-create-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Form fields */
+.admin-block-create-form select,
+.admin-block-create-form textarea,
+.admin-block-create-form input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+}
+
+.admin-block-create-form textarea {
+  min-height: 160px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.admin-block-create-form input[type="number"] {
+  max-width: 160px;
+}
+
+/* Highlight the active field */
+.admin-block-create-form select:focus,
+.admin-block-create-form textarea:focus,
+.admin-block-create-form input:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+/* Save button */
+.admin-block-create-form button {
+  align-self: flex-start;
+  padding: 12px 22px;
+  border: 1px solid #2563eb;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-block-create-form button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.admin-block-create-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Smaller screens */
+@media (max-width: 600px) {
+  .admin-block-create-form {
+    padding: 16px;
+  }
+}
+
+/* Lesson rich-text editor */
+.admin-tiptap-editor {
+  border: 1px solid #d7dce5;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.admin-tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.admin-block-create-form .admin-tiptap-toolbar button,
+.admin-tiptap-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #334155;
+  cursor: pointer;
+}
+
+.admin-block-create-form .admin-tiptap-toolbar button:hover,
+.admin-tiptap-toolbar button:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.admin-tiptap-editor .tiptap {
+  min-height: 190px;
+  padding: 18px;
+  outline: none;
+  color: #1e293b;
+  line-height: 1.7;
+}
+
+.admin-tiptap-editor .tiptap p {
+  margin: 0 0 12px;
+}
+
+.admin-tiptap-editor .tiptap ul {
+  list-style: disc;
+  padding-left: 25px;
+  margin: 12px 0;
+}
+
+.admin-tiptap-editor .tiptap ol {
+  list-style: decimal;
+  padding-left: 25px;
+  margin: 12px 0;
+}
+
+.admin-tiptap-editor .tiptap h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 14px 0 10px;
+}
+
+.admin-tiptap-editor .tiptap a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.admin-rich-code-input {
+  font-family: "DejaVu Sans Mono", monospace;
+  line-height: 1.6;
+  tab-size: 4;
+}

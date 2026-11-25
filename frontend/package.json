@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
+    "@tiptap/extension-link": "^3.35.0",
+    "@tiptap/pm": "^3.35.0",
+    "@tiptap/react": "^3.35.0",
+    "@tiptap/starter-kit": "^3.35.0",
     "lucide-react": "^1.72.0",
     "pyodide": "^314.0.8",
     "react": "^19.3.1",
