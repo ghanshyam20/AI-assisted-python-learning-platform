@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { LayoutDashboard, Library, BookOpen } from "lucide-react";
+import { LayoutDashboard, Library, BookOpen ,Users} from "lucide-react";
+import UserManagement from "./UserManagement";
 import ChapterManager from "./ChapterManager";
 import LessonManager from "./LessonManager";
 import LessonPageManager from "./LessonPageManager";
@@ -7,7 +8,7 @@ import { adminApi, type Chapter, type Lesson } from "./adminApi";
 import "./AdminDashboard.css";
 
 // Keep navigation limited to supported admin sections.
-type AdminSection = "overview" | "chapters" | "lessons" | "pages";
+type AdminSection = "overview" | "chapters" | "lessons" | "pages" | "users";
 
 // Manage shared content data and dashboard navigation.
 export default function AdminDashboard() {
@@ -20,7 +21,9 @@ export default function AdminDashboard() {
       saved === "overview" ||
       saved === "chapters" ||
       saved === "lessons" ||
-      saved === "pages"
+      saved === "pages"   ||
+      saved === "users"
+
     ) {
       return saved;
     }
