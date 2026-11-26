@@ -1,9 +1,9 @@
-import { useMemo, useState } from “react”;
-import { Search, Users, UserRound, RefreshCw } from “lucide-react”;
-import “./UserManagement.css”;
+import { useMemo, useState } from "react";
+import { Search, Users, UserRound, RefreshCw } from "lucide-react";
+import "./UserManagement.css";
 
 // Public-facing fields that an authorized admin may eventually receive.
-// Keep this type independent of Django’s private user model fields.
+// Keep this type independent of Django's private user model fields.
 export type ManagedUser = {
 id: number;
 username: string;
@@ -27,11 +27,11 @@ apiConnected?: boolean;
 export default function UserManagement({
 users = [],
 loading = false,
-error = “”,
+error = "",
 onRefresh,
 apiConnected = false,
 }: UserManagementProps) {
-const [search, setSearch] = useState(“”);
+const [search, setSearch] = useState("");
 const [selectedId, setSelectedId] = useState<number | null>(null);
 
 // Search locally over the users returned by the server.
@@ -53,23 +53,22 @@ return users.filter((user) => {
 const selectedUser =
 users.find((user) => user.id === selectedId) ?? null;
 
+// Display the user's full name, or username when no name exists.
 function displayName(user: ManagedUser) {
-return (
-${user.first_name} ${user.last_name}.trim() ||
-user.username
-);
+  const fullName = `${user.first_name} ${user.last_name}`.trim();
+  return fullName || user.username;
 }
 
 function formatDate(value: string) {
 const date = new Date(value);
 return Number.isNaN(date.getTime())
-? “Not available”
+? "Not available"
 : date.toLocaleDateString();
 }
 
 return (
-<section className=“user-management”>
-<div className=“user-management-heading”>
+<section className="user-management">
+<div className="user-management-heading">
 <div>
 <h2>User Management</h2>
 <p>View registered users and their account information.</p>

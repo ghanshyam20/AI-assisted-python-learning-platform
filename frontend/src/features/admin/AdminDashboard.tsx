@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { LayoutDashboard, Library, BookOpen ,Users} from "lucide-react";
+import { LayoutDashboard, Library, BookOpen, Users } from "lucide-react";
 import UserManagement from "./UserManagement";
 import ChapterManager from "./ChapterManager";
 import LessonManager from "./LessonManager";
@@ -21,9 +21,8 @@ export default function AdminDashboard() {
       saved === "overview" ||
       saved === "chapters" ||
       saved === "lessons" ||
-      saved === "pages"   ||
+      saved === "pages" ||
       saved === "users"
-
     ) {
       return saved;
     }
@@ -56,9 +55,7 @@ export default function AdminDashboard() {
       setChapters(chapterData);
       setLessons(lessonData);
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Unable to load content."
-      );
+      setError(err instanceof Error ? err.message : "Unable to load content.");
     } finally {
       setLoading(false);
     }
@@ -68,9 +65,7 @@ export default function AdminDashboard() {
     void loadContent();
   }, [loadContent]);
 
-  const publishedCount = lessons.filter(
-    (lesson) => lesson.published
-  ).length;
+  const publishedCount = lessons.filter((lesson) => lesson.published).length;
 
   return (
     <div className="admin-layout">
@@ -104,8 +99,24 @@ export default function AdminDashboard() {
             <BookOpen size={18} />
             <span>Lessons</span>
           </button>
-        <button type="button" className={activeSection === "pages" ? "active" : ""} onClick={() => setActiveSection("pages")}><BookOpen size={18} /><span>Lesson Pages</span></button>
-</nav>
+          <button
+            type="button"
+            className={activeSection === "pages" ? "active" : ""}
+            onClick={() => setActiveSection("pages")}
+          >
+            <BookOpen size={18} />
+            <span>Lesson Pages</span>
+          </button>
+          {/* User Management navigation */}
+          <button
+            type="button"
+            className={activeSection === "users" ? "active" : ""}
+            onClick={() => setActiveSection("users")}
+          >
+            <Users size={18} />
+            <span>User Management</span>
+          </button>
+        </nav>
         <p>Content Management</p>
       </aside>
 
@@ -115,8 +126,14 @@ export default function AdminDashboard() {
             <h1>Admin Dashboard</h1>
             <p>Manage your Python learning content.</p>
           </div>
-                    <button type="button" onClick={() => void loadContent()} disabled={loading}>{loading ? "-" : "Refresh Content"}</button>
-<span className="admin-role">Administrator</span>
+          <button
+            type="button"
+            onClick={() => void loadContent()}
+            disabled={loading}
+          >
+            {loading ? "-" : "Refresh Content"}
+          </button>
+          <span className="admin-role">Administrator</span>
         </header>
 
         {/* Show content statistics on the overview page. */}
@@ -143,9 +160,7 @@ export default function AdminDashboard() {
 
           <div className="admin-stat-card">
             <span>Drafts</span>
-            <strong>
-              {loading ? "-" : lessons.length - publishedCount}
-            </strong>
+            <strong>{loading ? "-" : lessons.length - publishedCount}</strong>
           </div>
         </section>
 
@@ -176,8 +191,10 @@ export default function AdminDashboard() {
             onRefresh={loadContent}
           />
         )}
-      {activeSection === "pages" && (<LessonPageManager lessons={lessons} />)}
-</main>
+        {activeSection === "pages" && <LessonPageManager lessons={lessons} />}
+        {/* Render the user management page when selected. */}
+        {activeSection === "users" && <UserManagement />}
+      </main>
     </div>
   );
 }

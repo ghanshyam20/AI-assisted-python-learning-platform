@@ -1,236 +1,236 @@
 /* User Management: scoped styles to avoid changing other admin pages. */
 
 .user-management {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
 }
 
 .user-management-heading,
 .user-list-header,
 .user-details-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
 .user-management h2,
 .user-management h3 {
-  margin: 0;
-  color: #17243B;
+  margin: 0;
+  color: #17243B;
 }
 
 .user-management p {
-  color: #66758B;
-  margin: 8px 0 0;
+  color: #66758B;
+  margin: 8px 0 0;
 }
 
 .user-refresh-button,
 .user-view-button,
 .user-details-heading button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 9px 14px;
-  background: #fff;
-  border: 1px solid #D6DEEA;
-  border-radius: 8px;
-  color: #17345D;
-  font-weight: 600;
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 14px;
+  background: #fff;
+  border: 1px solid #D6DEEA;
+  border-radius: 8px;
+  color: #17345D;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .user-refresh-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .user-summary-card,
 .user-management-card,
 .user-details-card {
-  background: #fff;
-  border: 1px solid #E1E7F0;
-  border-radius: 12px;
-  padding: 24px;
+  background: #fff;
+  border: 1px solid #E1E7F0;
+  border-radius: 12px;
+  padding: 24px;
 }
 
 .user-summary-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: min(100%, 280px);
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: min(100%, 280px);
+  box-sizing: border-box;
 }
 
 .user-summary-card span,
 .user-summary-card strong {
-  display: block;
+  display: block;
 }
 
 .user-summary-card span {
-  color: #66758B;
-  font-size: 13px;
+  color: #66758B;
+  font-size: 13px;
 }
 
 .user-summary-card strong {
-  font-size: 28px;
-  margin-top: 5px;
-  color: #17243B;
+  font-size: 28px;
+  margin-top: 5px;
+  color: #17243B;
 }
 
 .user-summary-icon {
-  padding: 12px;
-  border-radius: 10px;
-  background: #EDF3FF;
-  color: #315DA0;
+  padding: 12px;
+  border-radius: 10px;
+  background: #EDF3FF;
+  color: #315DA0;
 }
 
 .user-search-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 480px;
-  margin: 22px 0;
-  padding: 11px 14px;
-  border: 1px solid #D6DEEA;
-  border-radius: 8px;
-  color: #718096;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 480px;
+  margin: 22px 0;
+  padding: 11px 14px;
+  border: 1px solid #D6DEEA;
+  border-radius: 8px;
+  color: #718096;
 }
 
 .user-search-field:focus-within {
-  border-color: #497AC3;
+  border-color: #497AC3;
 }
 
 .user-search-field input {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  outline: none;
-  font: inherit;
-  background: transparent;
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font: inherit;
+  background: transparent;
 }
 
 .user-table-scroll {
-  overflow-x: auto;
+  overflow-x: auto;
 }
 
 .user-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
 }
 
 .user-table th,
 .user-table td {
-  padding: 15px 12px;
-  border-bottom: 1px solid #E9EDF3;
-  vertical-align: middle;
+  padding: 15px 12px;
+  border-bottom: 1px solid #E9EDF3;
+  vertical-align: middle;
 }
 
 .user-table th {
-  color: #66758B;
-  font-size: 13px;
-  font-weight: 600;
+  color: #66758B;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .user-table td {
-  color: #27374E;
-  font-size: 14px;
+  color: #27374E;
+  font-size: 14px;
 }
 
 .user-table td strong,
 .user-table td small {
-  display: block;
+  display: block;
 }
 
 .user-table td small {
-  color: #718096;
-  margin-top: 4px;
+  color: #718096;
+  margin-top: 4px;
 }
 
 .user-status {
-  display: inline-block;
-  border-radius: 20px;
-  padding: 5px 10px;
-  font-size: 12px;
-  font-weight: 600;
+  display: inline-block;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .user-status-active {
-  background: #E8F7EF;
-  color: #187449;
+  background: #E8F7EF;
+  color: #187449;
 }
 
 .user-status-inactive {
-  background: #F1F2F5;
-  color: #606B7B;
+  background: #F1F2F5;
+  color: #606B7B;
 }
 
 .user-message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 40px 20px;
-  text-align: center;
-  color: #66758B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #66758B;
 }
 
 .user-message p {
-  max-width: 440px;
+  max-width: 440px;
 }
 
 .user-message-error {
-  color: #A32727;
-  background: #FFF3F3;
-  border-radius: 8px;
+  color: #A32727;
+  background: #FFF3F3;
+  border-radius: 8px;
 }
 
 .user-details-heading h3 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .user-details-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin: 24px 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin: 24px 0 0;
 }
 
 .user-details-grid dt {
-  font-size: 13px;
-  color: #718096;
+  font-size: 13px;
+  color: #718096;
 }
 
 .user-details-grid dd {
-  margin: 6px 0 0;
-  color: #17243B;
-  font-weight: 600;
-  overflow-wrap: anywhere;
+  margin: 6px 0 0;
+  color: #17243B;
+  font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 700px) {
-  .user-management-heading {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+  .user-management-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 
-  .user-summary-card {
-    width: 100%;
-  }
+  .user-summary-card {
+    width: 100%;
+  }
 
-  .user-management-card,
-  .user-details-card {
-    padding: 16px;
-  }
+  .user-management-card,
+  .user-details-card {
+    padding: 16px;
+  }
 
-  .user-details-grid {
-    grid-template-columns: 1fr;
-  }
+  .user-details-grid {
+    grid-template-columns: 1fr;
+  }
 }
