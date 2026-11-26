@@ -35,6 +35,8 @@ export default function LessonContentEditor({
   const [content, setContent] = useState("");
   const [position, setPosition] = useState(1);
   const [saving, setSaving] = useState(false);
+  // tracks which content block is being edited 
+  const [editingId, setEditingId]=useState<number | null>(null);
 
   // Load content belonging only to the selected lesson page.
   useEffect(() => {
@@ -85,24 +87,30 @@ export default function LessonContentEditor({
 
     setSaving(true);
     setError("");
-
     try {
-      const created = await adminApi.blocks.create({
-        page: pageId,
-        block_type: blockType,
-        content: content.trim(),
-        position,
-      });
+      const saved =
+        editingId !== null
+          ? await adminApi.blocks.update(editingId, {
+              page: pageId,
+              block_type: blockType,
+              content: content.trim(),
+              position,
+            })
+          : await adminApi.blocks.create({
+              page: pageId,
+              block_type: blockType,
+              content: content.trim(),
+              position,
+            });
 
-      // Show the saved block immediately without refreshing the page.
       setBlocks((current) =>
-        [...current, created].sort(
+        [...current.filter((block) => block.id !== saved.id), saved].sort(
           (a, b) => a.position - b.position || a.id - b.id
         )
       );
-
       setContent("");
       setPosition((current) => current + 1);
+      setEditingId(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to save content.");
     } finally {
