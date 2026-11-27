@@ -1,0 +1,15 @@
+/* Page content studio: scoped to the CMS only. */
+.cms-workspace{max-width:1100px}
+.cms-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;margin:20px 0;border:1px solid #dbe5f2;border-radius:14px;background:linear-gradient(115deg,#f1f5ff,#fff)}
+.cms-toolbar strong{font-size:16px;color:#132543}.cms-toolbar p{font-size:13px;color:#64748b;margin:5px 0 0}
+.cms-toolbar button{background:#1d4ed8;color:white;border:0;border-radius:9px;padding:11px 16px;font-weight:650;cursor:pointer}
+.cms-preview-panel{margin:16px 0 24px;border:1px solid #cbd5e1;border-radius:16px;overflow:hidden;background:white;box-shadow:0 8px 30px rgba(20,43,83,.06)}
+.cms-preview-title{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;background:#f8fafc;border-bottom:1px solid #e2e8f0}
+.cms-preview-title strong{color:#14233e}.cms-preview-title span{font-size:12px;color:#64748b}
+.cms-preview-panel iframe{width:100%;height:430px;border:0;background:white}
+.cms-workspace .admin-block-create-form{padding:24px;border:1px solid #dce5f0;border-radius:16px;background:white;box-shadow:0 4px 20px rgba(25,44,80,.04)}
+.cms-workspace .admin-block-create-form h3{margin-top:0;font-size:18px}
+.cms-block-list{margin-top:24px;display:grid;gap:12px}
+.cms-block-list .admin-page-card{border:1px solid #e2e8f0;border-radius:12px;padding:16px;background:white}
+.cms-block-excerpt{font-size:13px;line-height:1.5;color:#64748b;max-height:64px;overflow:hidden;overflow-wrap:anywhere;white-space:pre-wrap}
+@media(max-width:650px){.cms-toolbar,.cms-preview-title{flex-direction:column;align-items:flex-start}.cms-preview-panel iframe{height:360px}}

@@ -13,10 +13,10 @@ class AIQuotaExceeded(Exception):
 
 def reserve_ai_request(student):
     student_limit = int(
-        os.getenv("AI_EXERCISES_PER_STUDENT_DAY", "5")
+        os.getenv("AI_REQUESTS_PER_STUDENT_DAY", "5")
     )
     project_limit = int(
-        os.getenv("AI_EXERCISES_PROJECT_DAY", "100")
+        os.getenv("AI_REQUESTS_PROJECT_DAY", "100")
     )
 
     today = timezone.localdate()
@@ -48,12 +48,12 @@ def reserve_ai_request(student):
 
         if student_used >= student_limit:
             raise AIQuotaExceeded(
-                "You have reached your daily AI exercise limit."
+                "You have reached your daily AI request limit."
             )
 
         if project_used >= project_limit:
             raise AIQuotaExceeded(
-                "PyLearn has reached its daily AI exercise limit."
+                "PyLearn has reached its daily AI request limit."
             )
 
         return AIUsage.objects.create(student=student)

@@ -20,6 +20,7 @@ export default function LessonManager({
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState("");
   const [success, setSuccess] = useState("");
+  const [publishingId, setPublishingId] = useState<number | null>(null);
 
   const filteredLessons = lessons.filter((lesson) =>
     `${lesson.title} ${lesson.chapter_title}`
@@ -59,6 +60,37 @@ export default function LessonManager({
       );
     } finally {
       setSaving(false);
+    }
+  }
+
+
+  // Update publication status through the existing admin API.
+  // Django remains responsible for checking staff permissions.
+  async function togglePublish(lesson: Lesson) {
+    setPublishingId(lesson.id);
+    setFormError("");
+    setSuccess("");
+
+    try {
+      await adminApi.lessons.update(lesson.id, {
+        published: !lesson.published,
+      });
+
+      await onRefresh();
+
+      setSuccess(
+        lesson.published
+          ? "Lesson unpublished successfully."
+          : "Lesson published successfully."
+      );
+    } catch (err) {
+      setFormError(
+        err instanceof Error
+          ? err.message
+          : "Unable to update lesson publication status."
+      );
+    } finally {
+      setPublishingId(null);
     }
   }
 
@@ -121,6 +153,10 @@ export default function LessonManager({
         onChange={(event) => setSearch(event.target.value)}
       />
 
+      {/* Publication feedback is visible even below the search field. */}
+      {formError && <p role="alert" className="admin-error-text">{formError}</p>}
+      {success && <p role="status" className="admin-success-text">{success}</p>}
+
       <div className="admin-table-wrap">
         <table>
           <thead>
@@ -128,16 +164,17 @@ export default function LessonManager({
               <th>Lesson</th>
               <th>Chapter</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={3}>Loading lessons...</td>
+                <td colSpan={4}>Loading lessons...</td>
               </tr>
             ) : filteredLessons.length === 0 ? (
               <tr>
-                <td colSpan={3}>
+                <td colSpan={4}>
                   {lessons.length === 0
                     ? "No lessons created yet."
                     : "No matching lessons found."}
@@ -156,6 +193,21 @@ export default function LessonManager({
                     >
                       {lesson.published ? "Published" : "Draft"}
                     </span>
+                  </td>
+                  <td>
+                    {/* Toggle publication without changing lesson content. */}
+                    <button
+                      type="button"
+                      className="admin-action admin-action-edit"
+                      disabled={publishingId !== null || loading}
+                      onClick={() => void togglePublish(lesson)}
+                    >
+                      {publishingId === lesson.id
+                        ? "Saving..."
+                        : lesson.published
+                          ? "Unpublish"
+                          : "Publish"}
+                    </button>
                   </td>
                 </tr>
               ))

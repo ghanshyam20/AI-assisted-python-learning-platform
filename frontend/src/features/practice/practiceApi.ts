@@ -10,6 +10,7 @@ export type GeneratedExercise = {
 export type ExerciseRequest = {
   topic: string
   difficulty: string
+  lesson_slug?: string
 }
 
 function getCookie(name: string): string | null {
