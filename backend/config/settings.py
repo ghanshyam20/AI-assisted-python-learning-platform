@@ -139,3 +139,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Authentication
 AUTH_USER_MODEL = 'accounts.User'
+
+
+# PyLearn local Vite origin fix
+CSRF_TRUSTED_ORIGINS = list(CSRF_TRUSTED_ORIGINS) + [
+    "http://localhost:5174",
+    "http://127.0.0.1:5174",
+]

@@ -94,3 +94,14 @@
     padding: 18px;
   }
 }
+
+/* Rich lesson content: consistent spacing and typography */
+.lesson-page__rich-text, .lesson-page__rich-heading { color: #334155; line-height: 1.8; overflow-wrap: anywhere; }
+.lesson-page__rich-heading h2, .lesson-page__rich-heading h3, .lesson-page__rich-heading h4 { color: #0f172a; margin: 22px 0 10px; }
+.lesson-page__rich-text p, .lesson-page__rich-text ul, .lesson-page__rich-text ol { margin: 12px 0; }
+.lesson-page__rich-text li { margin: 6px 0; }
+.lesson-page__code { padding: 18px; border-radius: 12px; overflow-x: auto; background: #101b32; color: #e8f0ff; white-space: pre; }
+.lesson-page__output { padding: 16px; border-radius: 12px; background: #f0f4f8; }
+.lesson-page__output pre { white-space: pre-wrap; margin-bottom: 0; }
+.lesson-page__callout { padding: 16px; border-left: 4px solid #64748b; background: #f8fafc; border-radius: 8px; line-height: 1.7; }
+.lesson-page__callout--tip { border-left-color: #2563eb; background: #eff6ff; }

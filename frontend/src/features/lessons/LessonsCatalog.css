@@ -236,3 +236,180 @@
   outline: 2px solid #2563eb;
   outline-offset: 4px;
 }
+/* PyLearn student lessons homepage refinements */
+
+.lessons-catalog {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 32px 56px;
+  box-sizing: border-box;
+}
+
+.lessons-header {
+  padding: 30px 36px;
+  border-radius: 18px;
+  margin-bottom: 28px;
+}
+
+.lessons-header h1 {
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1.2;
+  margin: 12px 0;
+}
+
+.lessons-header > p {
+  max-width: 620px;
+  line-height: 1.6;
+}
+
+.lessons-content {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pylearn-resume {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 24px;
+  border: 1px solid #dce5f3;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.pylearn-resume-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  color: #2458d3;
+  background: #eef3ff;
+  border-radius: 13px;
+}
+
+.pylearn-resume-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pylearn-resume-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: #2458d3;
+}
+
+.pylearn-resume-info h2 {
+  font-size: 19px;
+  margin: 6px 0;
+}
+
+.pylearn-resume-info p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.pylearn-resume-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  color: #fff;
+  background: #2458d3;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pylearn-catalog-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.pylearn-catalog-toolbar h2 {
+  font-size: 23px;
+  margin: 0 0 6px;
+}
+
+.pylearn-catalog-toolbar p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.pylearn-catalog-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 320px);
+  padding: 0 14px;
+  border: 1px solid #d6dfeb;
+  border-radius: 11px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.pylearn-catalog-search:focus-within {
+  border-color: #2458d3;
+}
+
+.pylearn-catalog-search input {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+}
+
+.pylearn-catalog-empty {
+  padding: 32px;
+  text-align: center;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.pylearn-catalog-empty h3 {
+  margin: 12px 0 6px;
+}
+
+.pylearn-catalog-empty p {
+  color: #64748b;
+}
+
+.lessons-chapter-list {
+  margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .lessons-catalog {
+    padding: 18px 16px 40px;
+  }
+
+  .lessons-header {
+    padding: 24px;
+  }
+
+  .pylearn-resume {
+    flex-wrap: wrap;
+  }
+
+  .pylearn-resume-button {
+    width: 100%;
+  }
+
+  .pylearn-catalog-search {
+    width: 100%;
+  }
+}

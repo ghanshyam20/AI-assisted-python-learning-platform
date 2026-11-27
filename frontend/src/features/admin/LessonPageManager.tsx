@@ -24,6 +24,7 @@ export default function LessonPageManager({ lessons }: Props) {
   const [editPosition, setEditPosition] = useState(1);
   const [editPublished, setEditPublished] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [publishingId, setPublishingId] = useState<number | null>(null);
 
 
 
@@ -75,6 +76,11 @@ export default function LessonPageManager({ lessons }: Props) {
       return;
     }
 
+    if (pages.some((page) => page.position === newPosition)) {
+      setError("This page position is already used. Choose another number.");
+      return;
+    }
+
     setSaving(true);
     setError("");
 
@@ -92,7 +98,7 @@ export default function LessonPageManager({ lessons }: Props) {
       );
 
       setNewTitle("");
-      setNewPosition(1);
+      setNewPosition(Math.max(newPosition + 1, created.position + 1));
       setNewPublished(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to create page.");
@@ -177,6 +183,29 @@ export default function LessonPageManager({ lessons }: Props) {
     }
   }
 
+
+  // Change page visibility without opening the edit form.
+  async function handleTogglePublish(page: LessonPage) {
+    setPublishingId(page.id);
+    setError("");
+
+    try {
+      const updated = await adminApi.pages.update(page.id, {
+        published: !page.published,
+      });
+
+      setPages((current) =>
+        current.map((item) => item.id === updated.id ? updated : item)
+      );
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to update publication."
+      );
+    } finally {
+      setPublishingId(null);
+    }
+  }
+
   // Show the editor instead of the page list when a page is selected.
   if (selectedPage) {
     return (
@@ -258,7 +287,7 @@ export default function LessonPageManager({ lessons }: Props) {
       {loading && <p role="status">Loading pages...</p>}
       {error && <p role="alert">{error}</p>}
 
-      {!loading && !error && lessonId && (
+      {!loading && lessonId && (
         <div className="admin-page-list">
           {pages.length === 0 ? (
             <p>No pages found for this lesson.</p>
@@ -321,6 +350,16 @@ export default function LessonPageManager({ lessons }: Props) {
                       <p>Page {page.position}</p>
                     </div>
                     <span>{page.published ? "Published" : "Draft"}</span>
+                    {/* Publish and unpublish directly from the page list. */}
+                    <button
+                      type="button"
+                      disabled={publishingId !== null || updating}
+                      onClick={() => void handleTogglePublish(page)}
+                    >
+                      {publishingId === page.id
+                        ? "Saving..."
+                        : page.published ? "Unpublish" : "Publish"}
+                    </button>
                     <button
                       type="button"
                       onClick={() => setSelectedPage(page)}
