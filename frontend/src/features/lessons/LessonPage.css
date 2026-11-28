@@ -95,13 +95,193 @@
   }
 }
 
-/* Rich lesson content: consistent spacing and typography */
-.lesson-page__rich-text, .lesson-page__rich-heading { color: #334155; line-height: 1.8; overflow-wrap: anywhere; }
-.lesson-page__rich-heading h2, .lesson-page__rich-heading h3, .lesson-page__rich-heading h4 { color: #0f172a; margin: 22px 0 10px; }
-.lesson-page__rich-text p, .lesson-page__rich-text ul, .lesson-page__rich-text ol { margin: 12px 0; }
-.lesson-page__rich-text li { margin: 6px 0; }
-.lesson-page__code { padding: 18px; border-radius: 12px; overflow-x: auto; background: #101b32; color: #e8f0ff; white-space: pre; }
-.lesson-page__output { padding: 16px; border-radius: 12px; background: #f0f4f8; }
-.lesson-page__output pre { white-space: pre-wrap; margin-bottom: 0; }
-.lesson-page__callout { padding: 16px; border-left: 4px solid #64748b; background: #f8fafc; border-radius: 8px; line-height: 1.7; }
-.lesson-page__callout--tip { border-left-color: #2563eb; background: #eff6ff; }
+/* =========================================================
+   Student lesson content
+   Reusable presentation for all admin-managed content blocks.
+   ========================================================= */
+
+/* Consistent reading typography across dynamic lesson content. */
+.lesson-page__rich-text,
+.lesson-page__rich-heading {
+  color: #334155;
+  font-size: 15px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+
+.lesson-page__rich-text > :first-child,
+.lesson-page__rich-heading > :first-child {
+  margin-top: 0;
+}
+
+.lesson-page__rich-text > :last-child,
+.lesson-page__rich-heading > :last-child {
+  margin-bottom: 0;
+}
+
+.lesson-page__rich-text {
+  margin: 18px 0;
+}
+
+.lesson-page__rich-text p {
+  margin: 0 0 16px;
+}
+
+/* Headings establish a clear hierarchy within each lesson page. */
+.lesson-page__rich-heading {
+  margin: 30px 0 16px;
+}
+
+.lesson-page__rich-heading h2 {
+  font-size: 24px;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.lesson-page__rich-heading h3 {
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.lesson-page__rich-heading h4 {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.lesson-page__rich-heading h2,
+.lesson-page__rich-heading h3,
+.lesson-page__rich-heading h4 {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* Both HTML lists and plain-text lists share the same appearance. */
+.lesson-page__rich-text ul,
+.lesson-page__rich-text ol,
+.lesson-page ul,
+.lesson-page ol {
+  padding-left: 26px;
+  margin: 18px 0;
+}
+
+.lesson-page li {
+  padding-left: 5px;
+  margin-bottom: 10px;
+  line-height: 1.75;
+}
+
+.lesson-page li::marker {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* Inline code is visually distinct from ordinary text. */
+.lesson-page__rich-text :not(pre) > code,
+.lesson-page__rich-heading :not(pre) > code {
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.9em;
+}
+
+/* Python code retains whitespace and supports horizontal scrolling. */
+.lesson-page__code {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid #253451;
+  border-radius: 14px;
+  background: #101b32;
+  color: #e8f0ff;
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-x: auto;
+  tab-size: 4;
+}
+
+.lesson-page__code code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+/* Expected output resembles a clean, readable terminal result. */
+.lesson-page__output {
+  margin: 24px 0;
+  padding: 20px 22px;
+  border: 1px solid #dbe3ee;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.lesson-page__output strong {
+  display: block;
+  margin-bottom: 12px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.lesson-page__output pre {
+  margin: 0;
+  color: #0f172a;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Learning tips and important notes use different visual treatments. */
+.lesson-page__callout {
+  margin: 24px 0;
+  padding: 20px 22px;
+  border: 1px solid #fcd34d;
+  border-left: 4px solid #f59e0b;
+  border-radius: 12px;
+  background: #fffbeb;
+  color: #78350f;
+  line-height: 1.75;
+}
+
+.lesson-page__callout--tip {
+  border-color: #bfdbfe;
+  border-left-color: #2563eb;
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.lesson-page__callout > strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lesson-page__callout p {
+  margin: 0 0 10px;
+}
+
+.lesson-page__callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive spacing keeps lesson content readable on smaller screens. */
+@media (max-width: 640px) {
+  .lesson-page__rich-text,
+  .lesson-page__rich-heading {
+    font-size: 14px;
+  }
+
+  .lesson-page__rich-heading h2 {
+    font-size: 21px;
+  }
+
+  .lesson-page__code {
+    padding: 16px;
+    font-size: 12px;
+  }
+
+  .lesson-page__output,
+  .lesson-page__callout {
+    padding: 16px;
+  }
+}
