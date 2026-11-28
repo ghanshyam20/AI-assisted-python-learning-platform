@@ -18,9 +18,26 @@ function ContentBlock({ block }: { block: PageBlock }) {
     case 'paragraph': return <div className="lesson-page__rich-text">{rich}</div>
     case 'bullets':
     case 'numbered': {
-      if (/<(?:ul|ol|li)\b/i.test(block.content)) return <div className="lesson-page__rich-text">{rich}</div>
-      const lines = block.content.split('\n').map((line) => line.trim()).filter(Boolean)
-      const items = lines.map((line, index) => <li key={index}>{line.replace(/^([-*]|\d+[.)])\s*/, '')}</li>)
+      // Keep lists created with TipTap, including their inline formatting.
+      if (/<(?:ul|ol|li)\b/i.test(block.content)) {
+        return <div className="lesson-page__rich-text">{rich}</div>
+      }
+
+      // Older lessons may contain separate paragraphs instead of list items.
+      const hasHtml = /<[a-z][\s\S]*>/i.test(block.content)
+      const text = hasHtml
+        ? Array.from(new DOMParser().parseFromString(block.content, 'text/html').body.querySelectorAll('p')).map((p) => p.textContent || '').join('\n')
+        : block.content
+
+      const lines = text
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+
+      const items = lines.map((line, index) => (
+        <li key={index}>{line.replace(/^([-*]|\d+[.)])\s*/, '')}</li>
+      ))
+
       return block.block_type === 'bullets' ? <ul>{items}</ul> : <ol>{items}</ol>
     }
     case 'code': return <pre className="lesson-page__code"><code>{block.content}</code></pre>
