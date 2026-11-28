@@ -1,5 +1,5 @@
 /* Page content studio: scoped to the CMS only. */
-.cms-workspace{max-width:1100px}
+.cms-workspace{width:100%;max-width:none;min-width:0}
 .cms-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;margin:20px 0;border:1px solid #dbe5f2;border-radius:14px;background:linear-gradient(115deg,#f1f5ff,#fff)}
 .cms-toolbar strong{font-size:16px;color:#132543}.cms-toolbar p{font-size:13px;color:#64748b;margin:5px 0 0}
 .cms-toolbar button{background:#1d4ed8;color:white;border:0;border-radius:9px;padding:11px 16px;font-weight:650;cursor:pointer}
@@ -13,3 +13,117 @@
 .cms-block-list .admin-page-card{border:1px solid #e2e8f0;border-radius:12px;padding:16px;background:white}
 .cms-block-excerpt{font-size:13px;line-height:1.5;color:#64748b;max-height:64px;overflow:hidden;overflow-wrap:anywhere;white-space:pre-wrap}
 @media(max-width:650px){.cms-toolbar,.cms-preview-title{flex-direction:column;align-items:flex-start}.cms-preview-panel iframe{height:360px}}
+
+
+/* Give the lesson form the full available dashboard width. */
+.cms-workspace .admin-block-create-form {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+/* Make the TipTap writing area comfortable for long lessons. */
+.cms-workspace .admin-tiptap-editor {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.cms-workspace .admin-tiptap-editor .tiptap {
+  min-height: 320px;
+  padding: 20px 24px;
+  font-size: 15px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+/* Give Python code and output enough editing space. */
+.cms-workspace .admin-rich-code-input {
+  width: 100%;
+  min-height: 280px;
+  box-sizing: border-box;
+  font-family: Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Keep formatting buttons usable on smaller screens. */
+.cms-workspace .admin-tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Improve readability of saved block previews. */
+.cms-workspace .cms-block-excerpt {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* Highlight formatting that is active at the cursor. */
+.cms-workspace .admin-tiptap-toolbar button[aria-pressed="true"] {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #93c5fd;
+}
+
+/* Make links recognizable while writing lesson content. */
+.cms-workspace .admin-tiptap-editor .tiptap a {
+  color: #1d4ed8;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+/* Keep font settings compact inside the formatting toolbar. */
+.cms-workspace .admin-tiptap-toolbar .admin-tiptap-font-size {
+  display: inline-block;
+  flex: 0 0 70px;
+  width: 70px;
+  min-width: 0;
+  max-width: 70px;
+  height: 36px;
+  margin: 0;
+  padding: 0 8px;
+  border: 1px solid #d7dce5;
+  border-radius: 7px;
+  background: #fff;
+  color: #334155;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Keep the font controls in the same row as the formatting buttons. */
+.admin-block-create-form .admin-tiptap-toolbar,
+.cms-workspace .admin-tiptap-toolbar {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-block-create-form .admin-tiptap-toolbar select[aria-label="Font family"],
+.cms-workspace .admin-tiptap-toolbar select[aria-label="Font family"] {
+  display: inline-block;
+  flex: 0 0 160px;
+  width: 160px;
+  min-width: 0;
+  max-width: 160px;
+  height: 36px;
+  margin: 0;
+  padding: 0 8px;
+}
+
+.admin-block-create-form .admin-tiptap-toolbar .admin-tiptap-font-size,
+.cms-workspace .admin-tiptap-toolbar .admin-tiptap-font-size {
+  display: inline-block;
+  flex: 0 0 65px;
+  width: 65px;
+  min-width: 0;
+  max-width: 65px;
+  height: 36px;
+  margin: 0;
+  padding: 0 6px;
+}
